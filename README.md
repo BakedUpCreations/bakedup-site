@@ -77,13 +77,18 @@ const CONFIG = {
   pastTag: 'past-event',
   cacheMinutes: 5,
   videos: ['', '', '', ''],   // paste YouTube watch URLs
-  weirdWubz: {                // the Weird Wubz tab — all of this can also come from WordPress
-    tag: 'weird-wubz',        // posts with this tag OR "Weird Wubz" in the title
-    instagram: 'https://www.instagram.com/weirdwubz/',
-    photos: [],               // up to 5 image URLs or Instagram post links; empty = WordPress media mentioning "wubz"
-    playlistUrl: '',          // Spotify / SoundCloud / YouTube / Apple Music / Mixcloud
-    playlistTitle: '...', playlistBlurb: '...',
-    featured: { name:'', blurb:'', image:'', mixUrl:'', link:'' }
+  series: [                   // one entry = one tab (Weird Wubz, ABELFEST …) with the shared layout
+    { id:'weirdwubz', name:'Weird Wubz', tag:'weird-wubz', match:/weird\s*wubz/i,
+      playlistTag:'wubz-playlist', featuredTag:'wubz-featured', photoWords:/wubz|wobble/i,
+      instagram:'https://www.instagram.com/weirdwubz/', igHandle:'@weirdwubz',
+      photos:[], playlistUrl:'', playlistTitle:'…', playlistBlurb:'…', featured:{…} },
+    { id:'abelfest', name:'ABELFEST', tag:'abelfest', match:/abel\s*fest/i, … }
+  ],
+  hoto: {                     // Hot Out The Oven Records tab
+    releaseTag:'release', artistTag:'label-artist', newDays:45,
+    submitUrl:'',             // paste the submission web-form link here when it exists
+    labelUrl:'https://bakedupcreations.com/hot-out-the-oven-records/',
+    fallbackReleases:[], fallbackArtists:[]
   },
   fallbackEvents: [...],      // shown only if WordPress is down
   fallbackPast: [...],
@@ -91,17 +96,26 @@ const CONFIG = {
 };
 ```
 
-### The Weird Wubz tab
+### Series tabs (Weird Wubz, ABELFEST)
 
-`#weirdwubz` is a filtered view of the same WordPress data: upcoming shows, a *Past Wubz*
-archive, a playlist card, a featured-artist card with an embedded mix, and a 5-picture
-strip. WordPress posts tagged `wubz-playlist` / `wubz-featured` override the `CONFIG`
-values (newest post wins); media items whose title/caption/alt mention "wubz" or "wobble"
-feed the picture strip. `WORDPRESS-GUIDE.md` has the posting format.
+Each `CONFIG.series` entry is turned into a page at startup (`buildSeriesPages()`), all
+sharing one layout: upcoming shows, playlist card, featured-artist card with an embedded
+mix, past archive by year, and a 5-picture strip. A show belongs to a series if it has the
+series tag or its title matches `match`. WordPress posts tagged `<playlistTag>` /
+`<featuredTag>` override the `CONFIG` values (newest post wins); media whose
+title/caption/alt matches `photoWords` feeds the strip. To add another series (say a new
+recurring night), copy an entry, change the ids/tags/words, and add the nav link.
+
+### Hot Out The Oven Records tab
+
+`#hoto` lists WordPress posts tagged `release` (New = within `newDays`, the rest under
+Recent) and `label-artist` (Meet the artists), plus a submission box whose button appears
+once `hoto.submitUrl` is set. A `Promo:` line on any show post is echoed in the home-page
+ticker and hero.
 
 Instagram itself is not read — Meta's API requires an approved app. The strip links out to
 the profile instead. If you ever want true Instagram content, paste post links
-(`https://www.instagram.com/p/XXXX/`) into `weirdWubz.photos`; those render as Instagram embeds.
+(`https://www.instagram.com/p/XXXX/`) into that series' `photos` list; those render as Instagram embeds.
 
 ---
 
