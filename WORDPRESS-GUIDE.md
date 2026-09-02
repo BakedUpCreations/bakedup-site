@@ -124,7 +124,7 @@ works like this:
 Edit the post in WordPress and update it. The website catches up within 5 minutes.
 
 If you need it to update **right now**: go to the website → **About & Contact** →
-scroll to the bottom → click **Squaad Admin** → **Refresh now**.
+scroll to the bottom → click **Squaad Admin** → sign in → **Refresh the site now**.
 
 Seeing an old flyer that you already replaced? Same panel → **Clear cache**.
 

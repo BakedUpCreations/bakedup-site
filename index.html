@@ -36,18 +36,15 @@
   .treats span{position:absolute;font-size:24px}
   @media(max-width:1240px){.treats{display:none}}
 
-  /* sticky menu + awning */
+  /* sticky menu */
   nav.site{position:sticky;top:0;z-index:50}
-  .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px)}
+  .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,95,162,.25)}
   .nav-inner img{height:72px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
   .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
   .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
   .menu a:hover{background:var(--pink);color:var(--bg)}
   .menu a.active{background:var(--pink);color:var(--bg)}
-  .awning{line-height:0}
-  .awning .stripe{height:34px;background:repeating-linear-gradient(90deg,var(--pink) 0 40px,var(--pink-soft) 40px 80px)}
-  .awning .scallop{height:20px;background-image:radial-gradient(circle 20px at 20px 0,var(--pink) 97%,transparent 100%),radial-gradient(circle 20px at 60px 0,var(--pink-soft) 97%,transparent 100%);background-size:80px 20px;background-repeat:repeat-x}
 
   .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
   .page{display:none}
@@ -166,13 +163,6 @@
   .admin-entry{margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);text-align:center}
   .admin-entry a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,247,.35);font-weight:600}
   .admin-entry a:hover{color:var(--pink)}
-  .admin{margin-top:22px;background:#120d1b;border:1px solid rgba(122,60,255,.4);border-radius:18px;padding:28px;display:none}
-  .admin.open{display:block}
-  .admin-note{background:rgba(122,60,255,.1);border:1px solid rgba(122,60,255,.4);border-radius:14px;padding:20px 22px;margin-bottom:16px}
-  .admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .admin-actions button{text-align:left;background:rgba(255,95,162,.1);border:1px solid rgba(255,95,162,.45);border-radius:14px;padding:20px;cursor:pointer;color:var(--ink)}
-  .admin-actions button:hover{background:rgba(255,95,162,.2)}
-  .admin-actions button .t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
   .pill{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:rgba(122,60,255,.2);color:var(--purple)}
   .pill.busy{background:var(--pink);color:var(--bg)}
   .log{margin-top:16px;background:#0b0811;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 18px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.9;color:rgba(245,240,247,.75);max-height:180px;overflow:auto}
@@ -209,7 +199,6 @@
       <a href="#about" data-page="about">About &amp; Contact</a>
     </div>
   </div>
-  <div class="awning"><div class="stripe"></div><div class="scallop"></div></div>
 </nav>
 
 <!-- ============ HOME ============ -->
@@ -409,22 +398,7 @@
       </div>
     </div>
 
-    <div class="admin-entry"><a href="#" id="admin-toggle">Squaad Admin</a></div>
-    <div class="admin" id="admin">
-      <div class="admin-note">
-        <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px">Events &amp; photos come from WordPress</div>
-        <p class="muted" style="margin:0;font-size:14px;line-height:1.6">Post it in WordPress and it appears here on its own — no deploy, no code. This panel is only here if something looks stuck.</p>
-      </div>
-      <div class="admin-actions">
-        <button id="btn-refresh"><div class="t">Refresh now</div><div class="muted" style="font-size:13px">Re-read events &amp; photos from WordPress immediately.</div></button>
-        <button id="btn-cache"><div class="t">Clear cache</div><div class="muted" style="font-size:13px">Use if an old flyer or photo is still showing.</div></button>
-      </div>
-      <div style="margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <span class="pill" id="admin-pill">Idle · all synced</span>
-        <span class="dim" style="font-size:13px">Last checked WordPress: <span id="admin-last">—</span></span>
-      </div>
-      <div class="log" id="admin-log"></div>
-    </div>
+    <div class="admin-entry"><a href="/admin/">Squaad Admin</a></div>
   </div>
 </section>
 </main>
@@ -632,7 +606,6 @@ async function load(force) {
     apply({ events: CONFIG.fallbackEvents, past: CONFIG.fallbackPast, photos: CONFIG.fallbackPhotos });
     log('[wordpress] could not reach WordPress (' + err.message + ') — showing built-in list');
   }
-  $('#admin-last').textContent = new Date().toLocaleString();
 }
 
 /* ---------- rendering ---------- */
@@ -949,28 +922,13 @@ window.addEventListener('hashchange', routeFromHash);
 $('#cal-prev').onclick = () => { if (state.calM === 0) { state.calM = 11; state.calY--; } else state.calM--; renderCalendar(); };
 $('#cal-next').onclick = () => { if (state.calM === 11) { state.calM = 0; state.calY++; } else state.calM++; renderCalendar(); };
 
-/* ---------- admin panel ---------- */
-function log(line) {
-  const box = $('#admin-log');
-  box.appendChild(el('div', '', esc(line)));
-  box.scrollTop = box.scrollHeight;
-}
-$('#admin-toggle').onclick = (e) => { e.preventDefault(); $('#admin').classList.toggle('open'); };
-$('#btn-refresh').onclick = async () => {
-  const pill = $('#admin-pill'); pill.textContent = 'Working…'; pill.classList.add('busy');
-  log('[refresh] reading WordPress…');
-  await load(true);
-  pill.textContent = 'Idle · all synced'; pill.classList.remove('busy');
-};
-$('#btn-cache').onclick = async () => {
-  localStorage.removeItem(CACHE_KEY);
-  log('[cache] cleared saved copy');
-  await load(true);
-};
+/* ---------- status log (visible in the browser console; the admin page lives at /admin/) ---------- */
+function log(line) { try { console.log('[bakedup] ' + line); } catch (e) {} }
 
 /* ---------- go ---------- */
 routeFromHash();
-load(false);
+// ?refresh=1 (sent by the admin page) throws away the saved copy and re-reads WordPress.
+load(/[?&]refresh=1/.test(location.search));
 setInterval(() => load(false), CONFIG.cacheMinutes * 60000);
 </script>
 </body>

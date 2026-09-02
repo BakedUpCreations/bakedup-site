@@ -122,15 +122,46 @@ later, a paid widget service (Curator, EmbedSocial, SnapWidget) is the low-effor
 
 ---
 
-## Admin panel
+## Admin page — `/admin/`
 
-The "Squaad Admin" link at the bottom of **About & Contact** opens a small panel with
-**Refresh now** and **Clear cache**. Both are real and run in the browser — no login,
-nothing to break, nothing destructive.
+The "Squaad Admin" link at the bottom of **About & Contact** goes to `/admin/`, a
+separate page locked behind **Cloudflare Access**. Admins sign in with Google or with a
+one-time code emailed to them. The page has:
 
-If you ever want it locked down, put the page behind **Cloudflare Access** (Zero Trust →
-Access → Applications) and allow specific Google accounts. Not required — the panel
-can't change any content.
+- **Refresh the site now / Clear cache** — for when WordPress changes aren't showing.
+- **Who can open this page** — the admin list. Add or remove emails right there; every
+  change has its own "Are you sure?" step, and the last admin can't be removed.
+
+```
+admin/index.html               the admin page (static)
+functions/admin/api/users.js   Pages Function: reads/edits the Access allow-list
+```
+
+### How the pieces fit
+
+1. **Cloudflare Access** (Zero Trust → Access → Applications) has a self-hosted app for
+   `bakedupcreations.pages.dev/admin` with one *Allow* policy listing admin emails.
+   Login methods on the app: Google + One-time PIN.
+2. `/admin/` is only reachable after that login. Cloudflare adds a signed token
+   (`Cf-Access-Jwt-Assertion`) to every request.
+3. `/admin/api/users` checks that token's signature against the team's public keys, then
+   uses the Cloudflare API to read or rewrite the policy's email list.
+
+### Settings the function needs (Pages project → Settings → Variables and secrets)
+
+| Name | Type | Value |
+|---|---|---|
+| `CF_API_TOKEN` | secret | API token: *Account → Access: Apps and Policies → Edit* (nothing else) |
+| `CF_ACCOUNT_ID` | text | the Cloudflare account ID |
+| `ACCESS_TEAM_DOMAIN` | text | `https://<team>.cloudflareaccess.com` |
+| `ACCESS_AUD` | text | the Access application's *Application Audience (AUD) Tag* |
+
+Until these exist the admin page still opens (behind login) but shows a "not set up yet"
+note instead of the list. If the token is ever leaked, roll it in Cloudflare → My Profile
+→ API Tokens; nothing else needs to change.
+
+Pages Functions are free (100k requests/day) and only run when someone uses the admin
+page — they don't affect the build count.
 
 ---
 
