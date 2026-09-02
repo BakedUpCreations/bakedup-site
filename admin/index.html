@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Squaad Admin — Baked Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0e0a14;--card:#1a1226;--ink:#f5f0f7;--pink:#ff5fa2;--pink-soft:#ffb3d1;--purple:#7a3cff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.5}
+  a{color:var(--pink);text-decoration:none}
+  h1,h2,h3{font-family:'Unbounded',sans-serif;margin:0}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px;background:rgba(14,10,20,.92);border-bottom:1px solid rgba(255,95,162,.25);flex-wrap:wrap}
+  .top img{height:48px;filter:drop-shadow(0 0 18px rgba(255,95,162,.45))}
+  .top .who{font-size:14px;color:rgba(245,240,247,.7);display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .top .who b{color:var(--ink)}
+  .wrap{max-width:920px;margin:0 auto;padding:36px 24px 80px}
+  .kicker{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple)}
+  h1{font-size:clamp(26px,4vw,40px);font-weight:900;margin:6px 0 8px}
+  .lede{color:rgba(245,240,247,.6);margin:0 0 30px}
+  .card{background:var(--card);border:1px solid rgba(122,60,255,.4);border-radius:18px;padding:26px 28px;margin-bottom:22px}
+  .card h2{font-size:20px;margin-bottom:6px}
+  .card .sub{color:rgba(245,240,247,.6);font-size:14px;margin:0 0 18px}
+  .actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .actions button,.actions a{text-align:left;background:rgba(255,95,162,.1);border:1px solid rgba(255,95,162,.45);border-radius:14px;padding:18px 20px;cursor:pointer;color:var(--ink);font:inherit;display:block}
+  .actions button:hover,.actions a:hover{background:rgba(255,95,162,.2)}
+  .actions .t{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+  .actions .d{font-size:13px;color:rgba(245,240,247,.6)}
+  .list{display:flex;flex-direction:column;gap:10px;margin:0 0 18px;padding:0;list-style:none}
+  .list li{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(122,60,255,.08);border:1px solid rgba(122,60,255,.3);border-radius:12px;padding:12px 16px}
+  .list li .em{font-weight:700;word-break:break-all}
+  .list li .you{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-left:8px}
+  .btn{display:inline-block;background:var(--pink);color:var(--bg);font-weight:700;padding:12px 22px;border-radius:999px;font:inherit;font-weight:700;border:0;cursor:pointer}
+  .btn:hover{background:#ff8fc0}
+  .btn-ghost{display:inline-block;border:1px solid rgba(255,95,162,.6);color:var(--ink);font-weight:700;padding:10px 20px;border-radius:999px;cursor:pointer;background:none;font:inherit;font-weight:700}
+  .btn-ghost:hover{background:var(--pink);color:var(--bg)}
+  .btn-danger{border-color:rgba(255,80,80,.6)}
+  .btn-danger:hover{background:#ff5050;color:#fff}
+  .btn[disabled],.btn-ghost[disabled]{opacity:.45;cursor:not-allowed}
+  form.add{display:flex;gap:10px;flex-wrap:wrap}
+  form.add input{flex:1;min-width:240px;background:#0b0811;border:1px solid rgba(122,60,255,.5);border-radius:999px;padding:12px 18px;color:var(--ink);font:inherit}
+  form.add input:focus{outline:2px solid var(--pink);border-color:transparent}
+  .msg{border-radius:12px;padding:12px 16px;font-size:14px;margin-top:16px;display:none}
+  .msg.ok{display:block;background:rgba(90,220,140,.12);border:1px solid rgba(90,220,140,.5)}
+  .msg.err{display:block;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.5)}
+  .dim{color:rgba(245,240,247,.5)}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+  /* confirmation dialog */
+  .veil{position:fixed;inset:0;background:rgba(5,3,9,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}
+  .veil.open{display:flex}
+  .dialog{background:var(--card);border:1px solid rgba(255,95,162,.5);border-radius:20px;padding:30px 32px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .dialog h3{font-size:19px;margin-bottom:10px;line-height:1.3}
+  .dialog p{margin:0 0 22px;color:rgba(245,240,247,.75)}
+  .dialog .row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+  .dialog .em{color:var(--pink);font-weight:700;word-break:break-all}
+  .setup{background:rgba(255,180,60,.1);border:1px solid rgba(255,180,60,.5);border-radius:14px;padding:18px 20px;font-size:14px;line-height:1.6}
+  .setup code{background:rgba(255,255,255,.08);padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <a href="/"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/baked-up-trademarked-full-color-white-r.png?w=525" alt="Baked Up"></a>
+  <div class="who">
+    <span>Signed in as <b id="me">…</b></span>
+    <a class="btn-ghost" style="padding:8px 16px;font-size:13px" href="/cdn-cgi/access/logout">Sign out</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="kicker">Squaad Admin</div>
+  <h1>Keep the oven running.</h1>
+  <p class="lede">Events, flyers and photos all come from WordPress — post there and the site updates itself. This page is for the two things WordPress can't do.</p>
+
+  <section class="card">
+    <h2>Site tools</h2>
+    <p class="sub">Use these only if something looks stuck.</p>
+    <div class="actions">
+      <a href="/?refresh=1"><div class="t">Refresh the site now</div><div class="d">Throws away the 5-minute saved copy and re-reads WordPress immediately.</div></a>
+      <button id="btn-cache"><div class="t">Clear cache</div><div class="d">Use if an old flyer or photo is still showing after you replaced it.</div></button>
+    </div>
+    <div class="msg" id="tools-msg"></div>
+  </section>
+
+  <section class="card">
+    <h2>Who can open this page</h2>
+    <p class="sub">Anyone on this list can sign in with their Google account or an emailed one-time code. Changes take effect right away.</p>
+    <div id="admins-setup" class="setup" style="display:none"></div>
+    <ul class="list" id="admins"><li><span class="dim">Loading…</span></li></ul>
+    <form class="add" id="add-form" autocomplete="off">
+      <input type="email" id="add-email" placeholder="name@example.com" required>
+      <button class="btn" type="submit" id="add-btn">Add admin</button>
+    </form>
+    <div class="msg" id="admins-msg"></div>
+  </section>
+
+  <p class="dim" style="font-size:13px">Need to change the roster, About text, or the DJ form? Those are in the site's code — see <span class="mono">README.md</span> in the GitHub repo.</p>
+</div>
+
+<!-- built-in confirmation -->
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="dlg-title">
+  <div class="dialog">
+    <h3 id="dlg-title">Are you sure?</h3>
+    <p id="dlg-text"></p>
+    <div class="row">
+      <button class="btn-ghost" id="dlg-cancel">Cancel</button>
+      <button class="btn" id="dlg-ok">Yes, do it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const CACHE_KEY = 'bakedup.wp.cache.v2';
+let me = '';
+
+/* ---- confirmation dialog (built into the page, not the browser's popup) ---- */
+function confirmBox(title, html, okLabel, danger) {
+  return new Promise(resolve => {
+    $('#dlg-title').textContent = title;
+    $('#dlg-text').innerHTML = html;
+    const ok = $('#dlg-ok');
+    ok.textContent = okLabel;
+    ok.className = danger ? 'btn-ghost btn-danger' : 'btn';
+    $('#veil').classList.add('open');
+    ok.focus();
+    const done = (v) => { $('#veil').classList.remove('open'); ok.onclick = null; $('#dlg-cancel').onclick = null; document.onkeydown = null; resolve(v); };
+    ok.onclick = () => done(true);
+    $('#dlg-cancel').onclick = () => done(false);
+    document.onkeydown = (e) => { if (e.key === 'Escape') done(false); };
+  });
+}
+
+function say(sel, text, ok) {
+  const m = $(sel); m.textContent = text; m.className = 'msg ' + (ok ? 'ok' : 'err');
+  if (ok) setTimeout(() => { if (m.textContent === text) m.className = 'msg'; }, 6000);
+}
+
+/* ---- who am I (from Cloudflare Access) ---- */
+fetch('/cdn-cgi/access/get-identity').then(r => r.json()).then(id => { me = (id.email || '').toLowerCase(); $('#me').textContent = id.email || 'unknown'; })
+  .catch(() => { $('#me').textContent = 'unknown'; });
+
+/* ---- site tools ---- */
+$('#btn-cache').onclick = () => {
+  try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+  say('#tools-msg', 'Cache cleared. The site will re-read WordPress the next time it opens.', true);
+};
+
+/* ---- admin list ---- */
+async function api(method, body) {
+  const r = await fetch('/admin/api/users', { method, headers: { 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+  const data = await r.json().catch(() => ({ error: 'Unexpected reply (' + r.status + ')' }));
+  if (!r.ok) { const e = new Error(data.error || ('HTTP ' + r.status)); e.notConfigured = data.notConfigured; throw e; }
+  return data;
+}
+
+function renderAdmins(emails) {
+  const ul = $('#admins'); ul.innerHTML = '';
+  if (!emails.length) { ul.innerHTML = '<li><span class="dim">Nobody yet.</span></li>'; return; }
+  emails.forEach(email => {
+    const li = document.createElement('li');
+    const isMe = email === me;
+    li.innerHTML = '<span class="em">' + esc(email) + (isMe ? '<span class="you">you</span>' : '') + '</span>' +
+      '<button class="btn-ghost btn-danger" style="padding:8px 16px;font-size:13px"' + (emails.length === 1 ? ' disabled title="You cannot remove the last admin"' : '') + '>Remove</button>';
+    li.querySelector('button').onclick = async () => {
+      const warn = isMe ? ' <br><br><b>This is your own email.</b> You will be locked out of this page as soon as you confirm.' : '';
+      const yes = await confirmBox('Remove this admin?', 'Are you sure you want to delete <span class="em">' + esc(email) + '</span> from the admin list? They will no longer be able to sign in here.' + warn, 'Yes, remove', true);
+      if (!yes) return;
+      try {
+        const d = await api('DELETE', { email });
+        renderAdmins(d.emails);
+        say('#admins-msg', 'Removed ' + email + '.', true);
+      } catch (e) { say('#admins-msg', e.message, false); }
+    };
+    ul.appendChild(li);
+  });
+}
+
+async function loadAdmins() {
+  try {
+    const d = await api('GET');
+    if (d.me && !me) { me = d.me.toLowerCase(); $('#me').textContent = d.me; }
+    renderAdmins(d.emails || []);
+  } catch (e) {
+    $('#admins').innerHTML = '';
+    if (e.notConfigured) {
+      const box = $('#admins-setup'); box.style.display = 'block';
+      box.innerHTML = '<b>Almost there.</b> The admin list can\'t be edited from here until the Cloudflare settings are filled in. ' +
+        esc(e.message) + '<br>Where: Cloudflare → Workers &amp; Pages → <code>bakedupcreations</code> → Settings → Variables and secrets.';
+      $('#add-btn').disabled = true;
+    } else say('#admins-msg', e.message, false);
+  }
+}
+
+$('#add-form').onsubmit = async (e) => {
+  e.preventDefault();
+  const email = $('#add-email').value.trim().toLowerCase();
+  if (!email) return;
+  const yes = await confirmBox('Add this admin?', 'Are you sure you want to add <span class="em">' + esc(email) + '</span>? They will be able to sign in here and add or remove other admins.', 'Yes, add', false);
+  if (!yes) return;
+  $('#add-btn').disabled = true;
+  try {
+    const d = await api('POST', { email });
+    renderAdmins(d.emails);
+    $('#add-email').value = '';
+    say('#admins-msg', d.note || ('Added ' + email + '. They can sign in right now.'), true);
+  } catch (err) { say('#admins-msg', err.message, false); }
+  $('#add-btn').disabled = false;
+};
+
+loadAdmins();
+</script>
+</body>
+</html>
