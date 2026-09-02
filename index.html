@@ -30,10 +30,10 @@
   @keyframes treatFall{0%{transform:translateY(-12vh) rotate(0)}100%{transform:translateY(112vh) rotate(340deg)}}
   @keyframes pulseGlow{0%,100%{opacity:.55}50%{opacity:1}}
 
-  /* falling treats */
+  /* falling sprinkles */
   .treats{position:fixed;top:0;bottom:0;width:56px;z-index:5;pointer-events:none}
   .treats.l{left:0} .treats.r{right:0}
-  .treats span{position:absolute;font-size:24px}
+  .treats span{position:absolute;display:block;width:6px;height:18px;border-radius:3px}
   @media(max-width:1240px){.treats{display:none}}
 
   /* sticky menu */
@@ -45,6 +45,9 @@
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
   .menu a:hover{background:var(--pink);color:var(--bg)}
   .menu a.active{background:var(--pink);color:var(--bg)}
+  .menu-rows{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}
+  .menu-rows .menu{margin-top:0}
+  .menu-row2{opacity:.92}
 
   .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
   .page{display:none}
@@ -195,40 +198,44 @@
 <body>
 
 <div class="treats l" aria-hidden="true">
-  <span style="left:8px;font-size:28px;animation:treatFall 11s linear infinite">🧁</span>
-  <span style="left:22px;animation:treatFall 14s linear infinite;animation-delay:-4s">🍪</span>
-  <span style="left:4px;font-size:20px;animation:treatFall 17s linear infinite;animation-delay:-9s">🍩</span>
-  <span style="left:26px;animation:treatFall 13s linear infinite;animation-delay:-7s">🍪</span>
+  <span style="left:8px;background:var(--pink);transform:rotate(18deg);animation:treatFall 11s linear infinite"></span>
+  <span style="left:22px;background:var(--purple);transform:rotate(-24deg);animation:treatFall 14s linear infinite;animation-delay:-4s"></span>
+  <span style="left:4px;width:5px;height:14px;background:var(--pink-soft);transform:rotate(8deg);animation:treatFall 17s linear infinite;animation-delay:-9s"></span>
+  <span style="left:26px;background:var(--purple-deep);transform:rotate(-12deg);animation:treatFall 13s linear infinite;animation-delay:-7s"></span>
 </div>
 <div class="treats r" aria-hidden="true">
-  <span style="right:8px;font-size:26px;animation:treatFall 12s linear infinite;animation-delay:-2s">🍪</span>
-  <span style="right:22px;animation:treatFall 16s linear infinite;animation-delay:-10s">🧁</span>
-  <span style="right:4px;font-size:20px;animation:treatFall 14s linear infinite;animation-delay:-5s">🧁</span>
-  <span style="right:24px;animation:treatFall 18s linear infinite;animation-delay:-12s">🍩</span>
+  <span style="right:8px;background:var(--purple);transform:rotate(-16deg);animation:treatFall 12s linear infinite;animation-delay:-2s"></span>
+  <span style="right:22px;background:var(--pink);transform:rotate(22deg);animation:treatFall 16s linear infinite;animation-delay:-10s"></span>
+  <span style="right:4px;width:5px;height:14px;background:var(--purple-deep);transform:rotate(-9deg);animation:treatFall 14s linear infinite;animation-delay:-5s"></span>
+  <span style="right:24px;background:var(--pink-soft);transform:rotate(15deg);animation:treatFall 18s linear infinite;animation-delay:-12s"></span>
 </div>
 
 <nav class="site">
   <div class="nav-inner">
     <a href="#home"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/baked-up-trademarked-full-color-white-r.png?w=525" alt="Baked Up"></a>
     <p class="slogan">Turning friends into family.</p>
-    <div class="menu" id="menu">
-      <a href="#home" data-page="home">Home</a>
-      <a href="#events" data-page="events">Events</a>
-      <a href="#media" data-page="media">Media</a>
-      <a href="#weirdwubz" data-page="weirdwubz">Weird Wubz</a>
-      <a href="#abelfest" data-page="abelfest">ABELFEST</a>
-      <a href="#roster" data-page="roster">Artist Roster</a>
-      <a href="#hoto" data-page="hoto">Hot Out The Oven Records</a>
-      <a href="#about" data-page="about">About &amp; Contact</a>
+    <div class="menu-rows" id="menu">
+      <div class="menu">
+        <a href="#home" data-page="home">Home</a>
+        <a href="#events" data-page="events">Events</a>
+        <a href="#media" data-page="media">Media</a>
+        <a href="#roster" data-page="roster">Artist Roster</a>
+        <a href="#hoto" data-page="hoto">Hot Out The Oven Records</a>
+        <a href="#about" data-page="about">About Us</a>
+      </div>
+      <div class="menu menu-row2">
+        <a href="#weirdwubz" data-page="weirdwubz">Weird Wubz</a>
+        <a href="#abelfest" data-page="abelfest">ABELFEST</a>
+      </div>
     </div>
   </div>
 </nav>
 
+<div class="ticker"><div id="ticker">🍪 Loading upcoming treats…</div></div>
+
 <!-- ============ HOME ============ -->
 <main>
 <section class="page active" id="page-home">
-  <div class="ticker"><div id="ticker">🍪 Loading upcoming treats…</div></div>
-
   <div class="wrap">
     <div class="hero">
       <div class="flyer-glow">
@@ -322,7 +329,7 @@
 <!-- ============ MEDIA ============ -->
 <section class="page" id="page-media">
   <div class="wrap">
-    <h2 class="sec">Fresh Out The <span style="color:var(--pink)">Oven</span></h2>
+    <h2 class="sec">Fresh Off The <span style="color:var(--pink)">Press</span></h2>
     <p class="lede">Photos and videos from the Squaad — everything here comes from WordPress.</p>
     <div class="carousel" id="carousel"></div>
     <div class="car-nav"><button id="car-prev" aria-label="Scroll left">‹</button><button id="car-next" aria-label="Scroll right">›</button></div>
