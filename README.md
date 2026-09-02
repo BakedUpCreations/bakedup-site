@@ -77,11 +77,31 @@ const CONFIG = {
   pastTag: 'past-event',
   cacheMinutes: 5,
   videos: ['', '', '', ''],   // paste YouTube watch URLs
+  weirdWubz: {                // the Weird Wubz tab — all of this can also come from WordPress
+    tag: 'weird-wubz',        // posts with this tag OR "Weird Wubz" in the title
+    instagram: 'https://www.instagram.com/weirdwubz/',
+    photos: [],               // up to 5 image URLs or Instagram post links; empty = WordPress media mentioning "wubz"
+    playlistUrl: '',          // Spotify / SoundCloud / YouTube / Apple Music / Mixcloud
+    playlistTitle: '...', playlistBlurb: '...',
+    featured: { name:'', blurb:'', image:'', mixUrl:'', link:'' }
+  },
   fallbackEvents: [...],      // shown only if WordPress is down
   fallbackPast: [...],
   fallbackPhotos: [...]
 };
 ```
+
+### The Weird Wubz tab
+
+`#weirdwubz` is a filtered view of the same WordPress data: upcoming shows, a *Past Wubz*
+archive, a playlist card, a featured-artist card with an embedded mix, and a 5-picture
+strip. WordPress posts tagged `wubz-playlist` / `wubz-featured` override the `CONFIG`
+values (newest post wins); media items whose title/caption/alt mention "wubz" or "wobble"
+feed the picture strip. `WORDPRESS-GUIDE.md` has the posting format.
+
+Instagram itself is not read — Meta's API requires an approved app. The strip links out to
+the profile instead. If you ever want true Instagram content, paste post links
+(`https://www.instagram.com/p/XXXX/`) into `weirdWubz.photos`; those render as Instagram embeds.
 
 ---
 

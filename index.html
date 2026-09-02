@@ -121,6 +121,19 @@
   .gallery > figure{margin:0;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.25)}
   .gallery > figure:first-child{grid-column:span 2;grid-row:span 2}
   .gallery img{width:100%;height:100%;object-fit:cover}
+  .carousel iframe{width:100%;height:100%;border:0;background:#fff}
+  .listen{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
+  .listen-card{display:flex;flex-direction:column}
+  .listen-card .body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .listen-card .kicker{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple)}
+  .listen-card h3{font-size:22px;margin:0;line-height:1.2}
+  .listen-card .embed{aspect-ratio:16/9;background:#0b0811;border-bottom:1px solid rgba(122,60,255,.25)}
+  .listen-card .embed.tall{aspect-ratio:auto;height:352px}
+  .listen-card .embed iframe{width:100%;height:100%;border:0}
+  .listen-card .who{display:flex;gap:16px;align-items:center}
+  .listen-card .who img{width:84px;height:84px;border-radius:999px;object-fit:cover;border:2px solid var(--pink);flex:0 0 auto}
+  .listen-card .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:36px 24px;min-height:200px;color:rgba(245,240,247,.55);border-bottom:1px solid rgba(122,60,255,.25)}
+  .listen-card .empty .ring{width:56px;height:56px;border-radius:999px;border:2px solid rgba(255,95,162,.6);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--pink);animation:pulseGlow 2.4s ease-in-out infinite}
   .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
   .videos > div{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.35)}
   .videos iframe{width:100%;height:100%;border:0}
@@ -190,6 +203,7 @@
     <div class="menu" id="menu">
       <a href="#home" data-page="home">Home</a>
       <a href="#events" data-page="events">Events</a>
+      <a href="#weirdwubz" data-page="weirdwubz">Weird Wubz</a>
       <a href="#media" data-page="media">Media</a>
       <a href="#roster" data-page="roster">Roster</a>
       <a href="#about" data-page="about">About &amp; Contact</a>
@@ -251,6 +265,37 @@
       <p class="lede">Eight years of parties. Every treat we've pulled out of the oven.</p>
       <div class="chips" id="archive-chips"></div>
       <div class="grid archive" id="archive-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEIRD WUBZ ============ -->
+<section class="page" id="page-weirdwubz">
+  <div class="wrap">
+    <h2 class="sec">Weird <span style="color:var(--pink)">Wubz</span></h2>
+    <p class="lede" id="wubz-lede">Our weekly wobble. Same crew, new bass, every week.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px" id="wubz-grid"></div>
+
+    <div class="listen" id="wubz-listen">
+      <article class="card listen-card" id="wubz-playlist"></article>
+      <article class="card listen-card" id="wubz-featured"></article>
+    </div>
+
+    <div style="margin-top:64px">
+      <h2 class="sec">Past <span style="color:var(--purple)">Wubz</span></h2>
+      <p class="lede">Every wobble so far.</p>
+      <div class="chips" id="wubz-chips"></div>
+      <div class="grid archive" id="wubz-archive"></div>
+    </div>
+
+    <div style="margin-top:64px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px">
+        <h2 class="sec" style="margin:0">On the <span style="color:var(--pink)">'Gram</span></h2>
+        <a class="btn-ghost" id="wubz-ig" href="https://www.instagram.com/weirdwubz/" target="_blank" rel="noopener">Follow @weirdwubz →</a>
+      </div>
+      <p class="lede">Latest from the wub cave.</p>
+      <div class="carousel" id="wubz-carousel"></div>
+      <div class="car-nav"><button id="wubz-prev" aria-label="Scroll left">‹</button><button id="wubz-next" aria-label="Scroll right">›</button></div>
     </div>
   </div>
 </section>
@@ -412,6 +457,22 @@ const CONFIG = {
   cacheMinutes: 5,
   // YouTube links for the Media page (paste full watch URLs)
   videos: ['', '', '', ''],
+  // ---- Weird Wubz page ----
+  // Everything here can ALSO be set from WordPress (see WORDPRESS-GUIDE.md) — WordPress wins when both exist.
+  weirdWubz: {
+    tag: 'weird-wubz',               // posts with this tag, OR with "Weird Wubz" in the title, land on the page
+    instagram: 'https://www.instagram.com/weirdwubz/',
+    // Up to 5 pictures for the strip at the bottom. Paste image URLs or Instagram post links
+    // (https://www.instagram.com/p/XXXX/). Leave empty to auto-pull WordPress media whose
+    // title / caption / alt text mentions "wubz" or "wobble".
+    photos: [],
+    // Playlist: Spotify / SoundCloud / YouTube / Apple Music / Mixcloud link. Or a WordPress post tagged `wubz-playlist`.
+    playlistUrl: '',
+    playlistTitle: 'The Weird Wubz playlist',
+    playlistBlurb: 'What the room sounds like. Updated whenever the wubs get weirder.',
+    // Featured artist with a curated mix. Or a WordPress post tagged `wubz-featured`.
+    featured: { name: '', blurb: '', image: '', mixUrl: '', link: '' }
+  },
   // Shown if WordPress is unreachable, so the site is never empty
   fallbackEvents: [
     { title:'Freaky Deaky', dateISO:'2026-10-30', endISO:'2026-10-31', venue:'Travis County Expo Center · Austin, TX',
@@ -437,14 +498,18 @@ const CONFIG = {
 };
 
 const API = 'https://public-api.wordpress.com/wp/v2/sites/' + CONFIG.wpSite;
-const CACHE_KEY = 'bakedup.wp.cache.v1';
+const CACHE_KEY = 'bakedup.wp.cache.v2';
 const $ = (s, r) => (r || document).querySelector(s);
 const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const stripTags = (s) => String(s || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
 
-let state = { events: [], past: [], photos: [], calY: null, calM: null, archiveYear: 'all' };
+let state = { events: [], past: [], photos: [], calY: null, calM: null, archiveYear: 'all',
+              wubz: { photos: [], playlist: null, featured: null }, wubzYear: 'all' };
+
+/* A show belongs on the Weird Wubz page if it carries the tag OR says "Weird Wubz" in the title. */
+const isWubz = (ev) => !!(ev.wubz || /weird\s*wubz/i.test(ev.title || ''));
 
 /* ---------- WordPress ---------- */
 async function fetchJSON(url) {
@@ -479,7 +544,9 @@ function parsePost(p) {
     venue: field('venue') || field('where') || '',
     ticketUrl: field('tickets') || field('ticket') || '',
     image: img,
-    link: p.link
+    link: p.link,
+    body,
+    tagIds: p.tags || []
   };
 }
 
@@ -489,28 +556,46 @@ async function loadFromWordPress() {
     fetchJSON(API + '/posts?per_page=50&_embed=wp:featuredmedia').catch(() => [])
   ]);
   const tagId = (slug) => (tags.find(t => t.slug === slug) || {}).id;
-  const evId = tagId(CONFIG.eventTag), pastId = tagId(CONFIG.pastTag);
+  const evId = tagId(CONFIG.eventTag), pastId = tagId(CONFIG.pastTag), wubzId = tagId(CONFIG.weirdWubz.tag);
+  const playlistId = tagId('wubz-playlist'), featuredId = tagId('wubz-featured');
 
   const all = posts.map(parsePost);
-  const tagged = (p, id) => id && posts.find(x => x.id === p.id && (x.tags || []).includes(id));
+  const tagged = (p, id) => !!id && p.tagIds.includes(id);
   const today = new Date().toISOString().slice(0, 10);
 
-  let events = all.filter(p => tagged(p, evId) && (p.endISO || p.dateISO) >= today);
-  let past   = all.filter(p => tagged(p, pastId) || ((p.endISO || p.dateISO) < today && tagged(p, evId)));
+  // Weird Wubz posts count as events even if someone forgets the plain `event` tag.
+  all.forEach(p => { p.wubz = tagged(p, wubzId); });
+  const isShow = (p) => tagged(p, evId) || p.wubz;
+  const special = (p) => tagged(p, playlistId) || tagged(p, featuredId);
+
+  let events = all.filter(p => isShow(p) && !special(p) && (p.endISO || p.dateISO) >= today);
+  let past   = all.filter(p => !special(p) && (tagged(p, pastId) || ((p.endISO || p.dateISO) < today && isShow(p))));
 
   // If nothing is tagged yet, fall back to date logic across all posts with a date line.
   if (!events.length && !past.length) {
-    events = all.filter(p => (p.endISO || p.dateISO) >= today);
-    past   = all.filter(p => (p.endISO || p.dateISO) < today);
+    events = all.filter(p => !special(p) && (p.endISO || p.dateISO) >= today);
+    past   = all.filter(p => !special(p) && (p.endISO || p.dateISO) < today);
   }
+
+  // Weird Wubz extras — one post each, newest wins.
+  const field = (p, name) => { const m = p.body.match(new RegExp(name + '\\s*:\\s*([^\\n]+)', 'i')); return m ? m[1].trim() : ''; };
+  const blurbOf = (p) => p.body.split('\n').filter(l => !/^\s*(link|mix|instagram|listen|date|end|venue|tickets?|where|when|through)\s*:/i.test(l)).join(' ').trim();
+  const plPost = all.find(p => tagged(p, playlistId));
+  const playlist = plPost ? { title: plPost.title, url: field(plPost, 'link') || field(plPost, 'listen'), blurb: blurbOf(plPost) } : null;
+  const ftPost = all.find(p => tagged(p, featuredId));
+  const featured = ftPost ? { name: ftPost.title, mixUrl: field(ftPost, 'mix') || field(ftPost, 'link'), link: field(ftPost, 'instagram') || field(ftPost, 'link'),
+                              image: ftPost.image, blurb: blurbOf(ftPost) } : null;
 
   const media = await fetchJSON(API + '/media?per_page=30&media_type=image').catch(() => []);
   const photos = media.map(m => m.source_url).filter(Boolean);
+  const wubzPhotos = media.filter(m => /wubz|wobble/i.test([m.title && m.title.rendered, m.caption && m.caption.rendered, m.alt_text].join(' ')))
+                          .map(m => m.source_url).filter(Boolean).slice(0, 5);
 
   return {
     events: events.sort((a, b) => a.dateISO.localeCompare(b.dateISO)),
     past: past.sort((a, b) => b.dateISO.localeCompare(a.dateISO)),
-    photos
+    photos,
+    wubz: { photos: wubzPhotos, playlist, featured }
   };
 }
 
@@ -535,7 +620,8 @@ async function load(force) {
     const data = {
       events: live.events.length ? live.events : CONFIG.fallbackEvents,
       past: live.past.length ? live.past : CONFIG.fallbackPast,
-      photos: live.photos.length ? live.photos : CONFIG.fallbackPhotos
+      photos: live.photos.length ? live.photos : CONFIG.fallbackPhotos,
+      wubz: live.wubz
     };
     writeCache(data);
     apply(data);
@@ -587,7 +673,8 @@ function apply(data) {
   state.events = data.events || [];
   state.past = data.past || [];
   state.photos = (data.photos && data.photos.length ? data.photos : CONFIG.fallbackPhotos) || [];
-  renderHome(); renderEvents(); renderCalendar(); renderArchive(); renderMedia();
+  state.wubz = data.wubz || { photos: [], playlist: null, featured: null };
+  renderHome(); renderEvents(); renderCalendar(); renderArchive(); renderMedia(); renderWubz();
 }
 
 function renderHome() {
@@ -715,9 +802,109 @@ function renderMedia() {
   });
 }
 
+/* ---------- Weird Wubz page ---------- */
+/* Turns a music link into a player. Returns '' if we don't know how to embed it (a button is shown instead). */
+function playerFor(url) {
+  const u = String(url || '').trim();
+  if (!u) return '';
+  let m;
+  if ((m = u.match(/open\.spotify\.com\/(playlist|album|track|artist|show|episode)\/([A-Za-z0-9]+)/)))
+    return { tall: true, html: '<iframe src="https://open.spotify.com/embed/' + m[1] + '/' + m[2] + '?theme=0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy"></iframe>' };
+  if (/soundcloud\.com\//.test(u))
+    return { tall: false, html: '<iframe src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(u) + '&color=%23ff5fa2&auto_play=false&show_teaser=false" allow="autoplay" loading="lazy"></iframe>' };
+  if ((m = u.match(/mixcloud\.com(\/[^?#]+)/)))
+    return { tall: false, html: '<iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=' + encodeURIComponent(m[1]) + '" allow="autoplay" loading="lazy"></iframe>' };
+  if ((m = u.match(/[?&]list=([\w-]+)/)) && /youtu/.test(u))
+    return { tall: false, html: '<iframe src="https://www.youtube.com/embed/videoseries?list=' + m[1] + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>' };
+  if ((m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/)))
+    return { tall: false, html: '<iframe src="https://www.youtube.com/embed/' + m[1] + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>' };
+  if ((m = u.match(/music\.apple\.com(\/.+)/)))
+    return { tall: true, html: '<iframe src="https://embed.music.apple.com' + m[1] + '" allow="autoplay *;encrypted-media *;fullscreen *;clipboard-write" loading="lazy"></iframe>' };
+  return '';
+}
+
+function renderWubz() {
+  const W = CONFIG.weirdWubz;
+  // Upcoming
+  const g = $('#wubz-grid'); g.innerHTML = '';
+  const up = state.events.filter(isWubz);
+  if (!up.length) g.appendChild(el('p', 'dim', 'No Weird Wubz on the books right now — check back soon.'));
+  up.forEach(ev => g.appendChild(eventCard(ev)));
+
+  // Playlist card
+  const pl = state.wubz.playlist && state.wubz.playlist.url ? state.wubz.playlist
+           : { title: W.playlistTitle, url: W.playlistUrl, blurb: W.playlistBlurb };
+  const plBox = $('#wubz-playlist');
+  const plPlayer = playerFor(pl.url);
+  plBox.innerHTML =
+    (plPlayer ? '<div class="embed' + (plPlayer.tall ? ' tall' : '') + '">' + plPlayer.html + '</div>'
+              : '<div class="empty"><div class="ring">♫</div><div>' + (pl.url ? 'Playlist link added — tap below to open it.' : 'Playlist coming soon.') + '</div></div>') +
+    '<div class="body"><div class="kicker">The playlist</div><h3>' + esc(pl.title || W.playlistTitle) + '</h3>' +
+    '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">' + esc(pl.blurb || '') + '</p>' +
+    (pl.url ? '<p style="margin:auto 0 0"><a class="btn" style="padding:12px 24px;font-size:14px" href="' + esc(pl.url) + '" target="_blank" rel="noopener">Open the playlist</a></p>' : '') +
+    '</div>';
+
+  // Featured artist card
+  const ft = state.wubz.featured && state.wubz.featured.name ? state.wubz.featured : W.featured;
+  const ftBox = $('#wubz-featured');
+  const ftPlayer = playerFor(ft.mixUrl);
+  if (!ft.name) {
+    ftBox.innerHTML = '<div class="empty"><div class="ring">🎧</div><div>Featured artist coming soon.</div></div>' +
+      '<div class="body"><div class="kicker">Featured artist</div><h3>Your name here?</h3>' +
+      '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">Every so often one artist takes over with a curated Weird Wubz mix. Send us yours.</p>' +
+      '<p style="margin:auto 0 0"><a class="btn-ghost" href="#about">Get in touch →</a></p></div>';
+  } else {
+    ftBox.innerHTML =
+      (ftPlayer ? '<div class="embed' + (ftPlayer.tall ? ' tall' : '') + '">' + ftPlayer.html + '</div>'
+                : (ft.image ? '<div class="sq"><img src="' + esc(ft.image) + '" alt="' + esc(ft.name) + '" loading="lazy"></div>' : '')) +
+      '<div class="body"><div class="kicker">Featured artist · curated mix</div>' +
+      '<div class="who">' + (ft.image && ftPlayer ? '<img src="' + esc(ft.image) + '" alt="' + esc(ft.name) + '" loading="lazy">' : '') + '<h3>' + esc(ft.name) + '</h3></div>' +
+      '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">' + esc(ft.blurb || '') + '</p>' +
+      '<p style="margin:auto 0 0;display:flex;gap:10px;flex-wrap:wrap">' +
+        (ft.mixUrl ? '<a class="btn" style="padding:12px 24px;font-size:14px" href="' + esc(ft.mixUrl) + '" target="_blank" rel="noopener">Play the mix</a>' : '') +
+        (ft.link ? '<a class="btn-ghost" href="' + esc(ft.link) + '" target="_blank" rel="noopener">Follow</a>' : '') +
+      '</p></div>';
+  }
+
+  // Past Wubz archive
+  const past = state.past.filter(isWubz);
+  const years = Array.from(new Set(past.map(p => p.dateISO.slice(0, 4)))).sort().reverse();
+  const chips = $('#wubz-chips'); chips.innerHTML = '';
+  if (!years.includes(state.wubzYear)) state.wubzYear = 'all';
+  [['all', 'ALL']].concat(years.map(y => [y, y])).forEach(([val, label]) => {
+    const b = el('button', 'chip' + (state.wubzYear === val ? ' active' : ''), label);
+    b.onclick = () => { state.wubzYear = val; renderWubz(); };
+    chips.appendChild(b);
+  });
+  const ag = $('#wubz-archive'); ag.innerHTML = '';
+  const shown = past.filter(p => state.wubzYear === 'all' || p.dateISO.slice(0, 4) === state.wubzYear);
+  if (!shown.length) ag.appendChild(el('p', 'dim', 'No past Wubz archived yet.'));
+  shown.forEach(p => ag.appendChild(eventCard(p, true)));
+
+  // Instagram strip — 5 pictures. Config list first, then WordPress media mentioning "wubz", then the show flyers.
+  $('#wubz-ig').href = W.instagram;
+  let pics = (W.photos || []).filter(Boolean).slice(0, 5);
+  if (!pics.length) pics = (state.wubz.photos || []).slice(0, 5);
+  if (!pics.length) pics = up.concat(past).map(e => e.image).filter(Boolean).slice(0, 5);
+  const car = $('#wubz-carousel'); car.innerHTML = '';
+  if (!pics.length) {
+    car.appendChild(el('div', '', '<div class="vempty"><div class="ring">📸</div><div class="mono">add 5 pictures — see WORDPRESS-GUIDE.md</div></div>'));
+  } else {
+    pics.concat(pics).forEach((src, i) => {
+      const d = el('div');
+      const ig = String(src).match(/instagram\.com\/(?:p|reel)\/([\w-]+)/);
+      d.innerHTML = ig
+        ? '<iframe src="https://www.instagram.com/p/' + ig[1] + '/embed/" title="Instagram post" loading="lazy" scrolling="no" allowtransparency="true"></iframe>'
+        : '<a href="' + esc(W.instagram) + '" target="_blank" rel="noopener"><img src="' + esc(src) + '" alt="Weird Wubz photo" loading="lazy"></a>';
+      if (i >= pics.length) d.setAttribute('aria-hidden', 'true');
+      car.appendChild(d);
+    });
+  }
+}
+
 /* ---------- carousel: auto-scroll, pause on hover, drag, infinite ---------- */
-(function carousel() {
-  const car = $('#carousel');
+function makeCarousel(carSel, prevSel, nextSel) {
+  const car = $(carSel);
   let pos = null, paused = false, drag = null;
   const tick = () => {
     const half = car.scrollWidth / 2;
@@ -740,9 +927,11 @@ function renderMedia() {
     if (drag.moved) car.scrollLeft = drag.sl - dx;
   });
   ['pointerup', 'pointercancel'].forEach(ev => car.addEventListener(ev, () => { drag = null; pos = null; }));
-  $('#car-prev').onclick = () => { car.scrollBy({ left: -336, behavior: 'smooth' }); pos = null; };
-  $('#car-next').onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
-})();
+  $(prevSel).onclick = () => { car.scrollBy({ left: -336, behavior: 'smooth' }); pos = null; };
+  $(nextSel).onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
+}
+makeCarousel('#carousel', '#car-prev', '#car-next');
+makeCarousel('#wubz-carousel', '#wubz-prev', '#wubz-next');
 
 /* ---------- routing ---------- */
 function show(page) {
@@ -752,7 +941,7 @@ function show(page) {
 }
 function routeFromHash() {
   const page = (location.hash || '#home').slice(1);
-  show(['home','events','media','roster','about'].includes(page) ? page : 'home');
+  show(['home','events','weirdwubz','media','roster','about'].includes(page) ? page : 'home');
 }
 window.addEventListener('hashchange', routeFromHash);
 
