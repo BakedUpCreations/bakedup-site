@@ -36,15 +36,18 @@
   .treats span{position:absolute;font-size:24px}
   @media(max-width:1240px){.treats{display:none}}
 
-  /* sticky menu */
+  /* sticky menu + awning */
   nav.site{position:sticky;top:0;z-index:50}
-  .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,95,162,.25)}
+  .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px)}
   .nav-inner img{height:72px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
   .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
-  .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);row-gap:clamp(4px,1.3vw,14px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
   .menu a:hover{background:var(--pink);color:var(--bg)}
   .menu a.active{background:var(--pink);color:var(--bg)}
+  .awning{line-height:0}
+  .awning .stripe{height:34px;background:repeating-linear-gradient(90deg,var(--pink) 0 40px,var(--pink-soft) 40px 80px)}
+  .awning .scallop{height:20px;background-image:radial-gradient(circle 20px at 20px 0,var(--pink) 97%,transparent 100%),radial-gradient(circle 20px at 60px 0,var(--pink-soft) 97%,transparent 100%);background-size:80px 20px;background-repeat:repeat-x}
 
   .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
   .page{display:none}
@@ -118,40 +121,6 @@
   .gallery > figure{margin:0;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.25)}
   .gallery > figure:first-child{grid-column:span 2;grid-row:span 2}
   .gallery img{width:100%;height:100%;object-fit:cover}
-  .carousel iframe{width:100%;height:100%;border:0;background:#fff}
-  .listen{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
-  .listen-card{display:flex;flex-direction:column}
-  .listen-card .body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
-  .listen-card .kicker{font-family:'Unbounded',sans-serif;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--purple)}
-  .listen-card h3{font-size:22px;margin:0;line-height:1.2}
-  .listen-card .embed{aspect-ratio:16/9;background:#0b0811;border-bottom:1px solid rgba(122,60,255,.25)}
-  .listen-card .embed.tall{aspect-ratio:auto;height:352px}
-  .listen-card .embed iframe{width:100%;height:100%;border:0}
-  .listen-card .who{display:flex;gap:16px;align-items:center}
-  .listen-card .who img{width:84px;height:84px;border-radius:999px;object-fit:cover;border:2px solid var(--pink);flex:0 0 auto}
-  .listen-card .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:36px 24px;min-height:200px;color:rgba(245,240,247,.55);border-bottom:1px solid rgba(122,60,255,.25)}
-  .listen-card .empty .ring{width:56px;height:56px;border-radius:999px;border:2px solid rgba(255,95,162,.6);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--pink);animation:pulseGlow 2.4s ease-in-out infinite}
-  .hoto-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
-  .sub-sec{font-size:clamp(20px,2.6vw,28px);font-weight:900;margin:0 0 6px}
-  .releases{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
-  .releases.small{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-  .releases .card .body{padding:16px 18px 20px}
-  .releases .kicker{font-family:'Unbounded',sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:6px}
-  .releases h3{font-size:17px;margin:0 0 3px;line-height:1.25}
-  .releases.small h3{font-size:15px}
-  .releases .artist{font-size:14px;color:rgba(245,240,247,.75);margin:0}
-  .releases .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-  .releases .links a{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(255,95,162,.5);border-radius:999px;padding:7px 12px;color:var(--ink)}
-  .releases .links a:hover{background:var(--pink);color:var(--bg)}
-  .artists{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
-  .artists .card{display:flex;flex-direction:column}
-  .artists .card .body{display:flex;flex-direction:column;gap:8px;flex:1}
-  .artists .who{display:flex;align-items:center;gap:14px}
-  .artists .who img{width:64px;height:64px;border-radius:999px;object-fit:cover;border:2px solid var(--pink);flex:0 0 auto}
-  .artists .who h3{font-size:18px;margin:0;line-height:1.2}
-  .artists .socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:6px;font-size:13px;font-weight:700}
-  .submit-box{margin-top:64px;background:linear-gradient(135deg,rgba(255,95,162,.16),rgba(122,60,255,.16));border:1px solid rgba(255,95,162,.4);border-radius:22px;padding:34px 32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-  .submit-box .soon{display:inline-block;border:1px dashed rgba(245,240,247,.4);color:rgba(245,240,247,.6);padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px}
   .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
   .videos > div{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.35)}
   .videos iframe{width:100%;height:100%;border:0}
@@ -184,6 +153,13 @@
   .admin-entry{margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);text-align:center}
   .admin-entry a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,247,.35);font-weight:600}
   .admin-entry a:hover{color:var(--pink)}
+  .admin{margin-top:22px;background:#120d1b;border:1px solid rgba(122,60,255,.4);border-radius:18px;padding:28px;display:none}
+  .admin.open{display:block}
+  .admin-note{background:rgba(122,60,255,.1);border:1px solid rgba(122,60,255,.4);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+  .admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .admin-actions button{text-align:left;background:rgba(255,95,162,.1);border:1px solid rgba(255,95,162,.45);border-radius:14px;padding:20px;cursor:pointer;color:var(--ink)}
+  .admin-actions button:hover{background:rgba(255,95,162,.2)}
+  .admin-actions button .t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
   .pill{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:rgba(122,60,255,.2);color:var(--purple)}
   .pill.busy{background:var(--pink);color:var(--bg)}
   .log{margin-top:16px;background:#0b0811;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 18px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.9;color:rgba(245,240,247,.75);max-height:180px;overflow:auto}
@@ -215,13 +191,11 @@
       <a href="#home" data-page="home">Home</a>
       <a href="#events" data-page="events">Events</a>
       <a href="#media" data-page="media">Media</a>
-      <a href="#weirdwubz" data-page="weirdwubz">Weird Wubz</a>
-      <a href="#abelfest" data-page="abelfest">ABELFEST</a>
-      <a href="#roster" data-page="roster">Artist Roster</a>
-      <a href="#hoto" data-page="hoto">Hot Out The Oven Records</a>
+      <a href="#roster" data-page="roster">Roster</a>
       <a href="#about" data-page="about">About &amp; Contact</a>
     </div>
   </div>
+  <div class="awning"><div class="stripe"></div><div class="scallop"></div></div>
 </nav>
 
 <!-- ============ HOME ============ -->
@@ -241,7 +215,7 @@
         <p style="font-size:17px;color:rgba(245,240,247,.75);margin:0 0 22px" id="hero-venue">Travis County Expo Center · Austin, TX</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
           <a class="btn" id="hero-tickets" href="https://freakydeaky.com/" target="_blank" rel="noopener">Get tickets</a>
-          <span id="hero-promo" style="font-size:15px;color:rgba(245,240,247,.7)">promo code <strong id="hero-promo-code" style="color:var(--pink);font-family:'Unbounded',sans-serif">BAKEDUP</strong></span>
+          <span style="font-size:15px;color:rgba(245,240,247,.7)">promo code <strong style="color:var(--pink);font-family:'Unbounded',sans-serif">BAKEDUP</strong></span>
         </div>
       </div>
     </div>
@@ -277,44 +251,6 @@
       <p class="lede">Eight years of parties. Every treat we've pulled out of the oven.</p>
       <div class="chips" id="archive-chips"></div>
       <div class="grid archive" id="archive-grid"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SERIES PAGES (Weird Wubz, ABELFEST) — built from CONFIG.series ============ -->
-<div id="series-pages"></div>
-
-<!-- ============ HOT OUT THE OVEN RECORDS ============ -->
-<section class="page" id="page-hoto">
-  <div class="wrap">
-    <div class="hoto-head">
-      <div>
-        <div class="badge">The label</div>
-        <h2 class="sec" style="margin-top:14px">Hot Out The Oven <span style="color:var(--pink)">Records</span></h2>
-        <p class="lede" id="hoto-lede">Fresh heat from the Baked Up kitchen — releases, remixes and the artists behind them.</p>
-      </div>
-      <a class="btn-ghost" id="hoto-link" href="https://bakedupcreations.com/hot-out-the-oven-records/" target="_blank" rel="noopener">Label on WordPress →</a>
-    </div>
-
-    <h3 class="sub-sec">New <span style="color:var(--pink)">releases</span></h3>
-    <p class="lede">Just out of the oven.</p>
-    <div class="grid releases" id="hoto-new"></div>
-
-    <h3 class="sub-sec" style="margin-top:56px">Recent <span style="color:var(--purple)">releases</span></h3>
-    <p class="lede">Still warm.</p>
-    <div class="grid releases small" id="hoto-recent"></div>
-
-    <h3 class="sub-sec" style="margin-top:64px">Meet the <span style="color:var(--pink)">artists</span></h3>
-    <p class="lede">The people cooking on the label.</p>
-    <div class="grid artists" id="hoto-artists"></div>
-
-    <div class="submit-box" id="hoto-submit">
-      <div>
-        <div class="badge">Submissions</div>
-        <h3 style="font-size:clamp(20px,2.6vw,28px);font-weight:900;margin:14px 0 8px">Got a song or album for us?</h3>
-        <p class="muted" style="margin:0;max-width:60ch;line-height:1.6">Send us your track, EP or album. We listen to everything. Include a private stream link, a short bio and where you're based.</p>
-      </div>
-      <div id="hoto-submit-cta"></div>
     </div>
   </div>
 </section>
@@ -376,7 +312,7 @@
     <div class="label-cta">
       <h3 style="font-size:20px;margin-bottom:10px">Hot Out The Oven Records</h3>
       <p class="muted" style="margin:0 0 20px">Our in-house label — releases, remixes and fresh heat.</p>
-      <a class="btn-ghost" href="#hoto">See the releases →</a>
+      <a class="btn-ghost" href="https://bakedupcreations.com/hot-out-the-oven-records/" target="_blank" rel="noopener">Visit the label</a>
     </div>
   </div>
 </section>
@@ -428,7 +364,22 @@
       </div>
     </div>
 
-    <div class="admin-entry"><a href="/admin/">Squaad Admin</a></div>
+    <div class="admin-entry"><a href="#" id="admin-toggle">Squaad Admin</a></div>
+    <div class="admin" id="admin">
+      <div class="admin-note">
+        <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px">Events &amp; photos come from WordPress</div>
+        <p class="muted" style="margin:0;font-size:14px;line-height:1.6">Post it in WordPress and it appears here on its own — no deploy, no code. This panel is only here if something looks stuck.</p>
+      </div>
+      <div class="admin-actions">
+        <button id="btn-refresh"><div class="t">Refresh now</div><div class="muted" style="font-size:13px">Re-read events &amp; photos from WordPress immediately.</div></button>
+        <button id="btn-cache"><div class="t">Clear cache</div><div class="muted" style="font-size:13px">Use if an old flyer or photo is still showing.</div></button>
+      </div>
+      <div style="margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span class="pill" id="admin-pill">Idle · all synced</span>
+        <span class="dim" style="font-size:13px">Last checked WordPress: <span id="admin-last">—</span></span>
+      </div>
+      <div class="log" id="admin-log"></div>
+    </div>
   </div>
 </section>
 </main>
@@ -438,7 +389,7 @@
     <a href="https://www.instagram.com/bakedupcreations/" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.facebook.com/bakedupcreations/" target="_blank" rel="noopener">Facebook</a>
     <a href="https://bakedupcreations.com/shop/" target="_blank" rel="noopener">Shop Merch</a>
-    <a href="#hoto">Hot Out The Oven Records</a>
+    <a href="https://bakedupcreations.com/hot-out-the-oven-records/" target="_blank" rel="noopener">Hot Out The Oven Records</a>
     <a href="https://linktr.ee/bakedupcreations" target="_blank" rel="noopener">Linktree</a>
   </div>
   <p class="dim" style="font-size:13px;margin:24px 0 0">© 2026 Baked Up, LLC · Austin, TX · Turning friends into family.</p>
@@ -461,56 +412,10 @@ const CONFIG = {
   cacheMinutes: 5,
   // YouTube links for the Media page (paste full watch URLs)
   videos: ['', '', '', ''],
-  // ---- Series pages (Weird Wubz, ABELFEST …) ----
-  // Each entry becomes a tab with the same layout: upcoming shows, playlist + featured artist,
-  // past archive, 5-picture strip. Everything can ALSO be set from WordPress (see WORDPRESS-GUIDE.md);
-  // WordPress wins when both exist.
-  series: [
-    {
-      id: 'weirdwubz', name: 'Weird Wubz', menu: 'Weird Wubz',
-      titleHtml: 'Weird <span style="color:var(--pink)">Wubz</span>',
-      lede: 'Our weekly wobble. Same crew, new bass, every week.',
-      pastTitleHtml: 'Past <span style="color:var(--purple)">Wubz</span>', pastLede: 'Every wobble so far.',
-      tag: 'weird-wubz',                    // posts with this tag OR "Weird Wubz" in the title land here
-      match: /weird\s*wubz/i,
-      playlistTag: 'wubz-playlist', featuredTag: 'wubz-featured',
-      photoWords: /wubz|wobble/i,           // WordPress media whose title/caption/alt matches feed the picture strip
-      instagram: 'https://www.instagram.com/weirdwubz/', igHandle: '@weirdwubz',
-      photos: [],                           // up to 5 image URLs or Instagram post links (overrides WordPress)
-      playlistUrl: '', playlistTitle: 'The Weird Wubz playlist',
-      playlistBlurb: 'What the room sounds like. Updated whenever the wubs get weirder.',
-      featured: { name: '', blurb: '', image: '', mixUrl: '', link: '' }
-    },
-    {
-      id: 'abelfest', name: 'ABELFEST', menu: 'ABELFEST',
-      titleHtml: 'ABEL<span style="color:var(--pink)">FEST</span>',
-      lede: 'One day. One family. The biggest bake of the year.',
-      pastTitleHtml: 'Past <span style="color:var(--purple)">ABELFESTs</span>', pastLede: 'Every year so far.',
-      tag: 'abelfest',
-      match: /abel\s*fest/i,
-      playlistTag: 'abelfest-playlist', featuredTag: 'abelfest-featured',
-      photoWords: /abel\s*fest/i,
-      instagram: 'https://www.instagram.com/abelfest.tx/', igHandle: '@abelfest.tx',
-      photos: [],
-      playlistUrl: '', playlistTitle: 'The ABELFEST playlist',
-      playlistBlurb: 'Warm-up for the big one.',
-      featured: { name: '', blurb: '', image: '', mixUrl: '', link: '' }
-    }
-  ],
-  // ---- Hot Out The Oven Records ----
-  hoto: {
-    releaseTag: 'release',                  // WordPress posts tagged `release` = a song / EP / album
-    artistTag: 'label-artist',              // WordPress posts tagged `label-artist` = someone on the label
-    newDays: 45,                            // releases newer than this many days count as "New"
-    submitUrl: '',                          // paste the submission web form link when it exists
-    labelUrl: 'https://bakedupcreations.com/hot-out-the-oven-records/',
-    fallbackReleases: [],                   // shown only if WordPress has no `release` posts yet
-    fallbackArtists: []
-  },
   // Shown if WordPress is unreachable, so the site is never empty
   fallbackEvents: [
     { title:'Freaky Deaky', dateISO:'2026-10-30', endISO:'2026-10-31', venue:'Travis County Expo Center · Austin, TX',
-      ticketUrl:'https://freakydeaky.com/', promo:'BAKEDUP', image:'https://bakedupcreations.com/wp-content/uploads/2026/06/unnamed-24.png?w=500' },
+      ticketUrl:'https://freakydeaky.com/', image:'https://bakedupcreations.com/wp-content/uploads/2026/06/unnamed-24.png?w=500' },
     { title:'Weird Wubz', dateISO:'2026-08-19', venue:'Vulcan Gas Company, Austin',
       image:'https://bakedupcreations.com/wp-content/uploads/2026/08/wobble-wednesday-upcoming-show-date-1-1.jpg?w=840' }
   ],
@@ -532,18 +437,14 @@ const CONFIG = {
 };
 
 const API = 'https://public-api.wordpress.com/wp/v2/sites/' + CONFIG.wpSite;
-const CACHE_KEY = 'bakedup.wp.cache.v2';
+const CACHE_KEY = 'bakedup.wp.cache.v1';
 const $ = (s, r) => (r || document).querySelector(s);
 const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const stripTags = (s) => String(s || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
 
-let state = { events: [], past: [], photos: [], calY: null, calM: null, archiveYear: 'all',
-              series: {}, seriesYear: {}, hoto: { releases: [], artists: [] } };
-
-/* A show belongs on a series page if it carries the series tag OR the title matches (e.g. "Weird Wubz …"). */
-const inSeries = (ev, sr) => !!((ev.seriesIds || []).includes(sr.id) || sr.match.test(ev.title || ''));
+let state = { events: [], past: [], photos: [], calY: null, calM: null, archiveYear: 'all' };
 
 /* ---------- WordPress ---------- */
 async function fetchJSON(url) {
@@ -577,11 +478,8 @@ function parsePost(p) {
     endISO: endRaw && !isNaN(new Date(endRaw)) ? new Date(endRaw).toISOString().slice(0, 10) : '',
     venue: field('venue') || field('where') || '',
     ticketUrl: field('tickets') || field('ticket') || '',
-    promo: field('promo') || field('promo code') || field('code') || '',
     image: img,
-    link: p.link,
-    body,
-    tagIds: p.tags || []
+    link: p.link
   };
 }
 
@@ -592,61 +490,27 @@ async function loadFromWordPress() {
   ]);
   const tagId = (slug) => (tags.find(t => t.slug === slug) || {}).id;
   const evId = tagId(CONFIG.eventTag), pastId = tagId(CONFIG.pastTag);
+
   const all = posts.map(parsePost);
-  const tagged = (p, id) => !!id && p.tagIds.includes(id);
+  const tagged = (p, id) => id && posts.find(x => x.id === p.id && (x.tags || []).includes(id));
   const today = new Date().toISOString().slice(0, 10);
 
-  // Series tags (weird-wubz, abelfest …) count as events even if someone forgets the plain `event` tag.
-  const seriesIds = CONFIG.series.map(sr => ({ sr, id: tagId(sr.tag), plId: tagId(sr.playlistTag), ftId: tagId(sr.featuredTag) }));
-  all.forEach(p => { p.seriesIds = seriesIds.filter(x => tagged(p, x.id)).map(x => x.sr.id); });
-  const releaseId = tagId(CONFIG.hoto.releaseTag), artistId = tagId(CONFIG.hoto.artistTag);
-  const isShow = (p) => tagged(p, evId) || p.seriesIds.length > 0;
-  const special = (p) => seriesIds.some(x => tagged(p, x.plId) || tagged(p, x.ftId)) || tagged(p, releaseId) || tagged(p, artistId);
-
-  let events = all.filter(p => isShow(p) && !special(p) && (p.endISO || p.dateISO) >= today);
-  let past   = all.filter(p => !special(p) && (tagged(p, pastId) || ((p.endISO || p.dateISO) < today && isShow(p))));
+  let events = all.filter(p => tagged(p, evId) && (p.endISO || p.dateISO) >= today);
+  let past   = all.filter(p => tagged(p, pastId) || ((p.endISO || p.dateISO) < today && tagged(p, evId)));
 
   // If nothing is tagged yet, fall back to date logic across all posts with a date line.
   if (!events.length && !past.length) {
-    events = all.filter(p => !special(p) && (p.endISO || p.dateISO) >= today);
-    past   = all.filter(p => !special(p) && (p.endISO || p.dateISO) < today);
+    events = all.filter(p => (p.endISO || p.dateISO) >= today);
+    past   = all.filter(p => (p.endISO || p.dateISO) < today);
   }
-
-  const field = (p, name) => { const m = p.body.match(new RegExp(name + '\\s*:\\s*([^\\n]+)', 'i')); return m ? m[1].trim() : ''; };
-  const blurbOf = (p) => p.body.split('\n').filter(l => !/^\s*(link|mix|instagram|soundcloud|spotify|bandcamp|youtube|listen|buy|artist|label|type|date|end|venue|tickets?|promo|where|when|through)\s*:/i.test(l)).join(' ').trim();
 
   const media = await fetchJSON(API + '/media?per_page=30&media_type=image').catch(() => []);
   const photos = media.map(m => m.source_url).filter(Boolean);
-  const mediaText = (m) => [m.title && m.title.rendered, m.caption && m.caption.rendered, m.alt_text].join(' ');
-
-  // Per-series extras — playlist + featured artist posts (newest wins) and matching media for the picture strip.
-  const series = {};
-  seriesIds.forEach(x => {
-    const plPost = all.find(p => tagged(p, x.plId));
-    const ftPost = all.find(p => tagged(p, x.ftId));
-    series[x.sr.id] = {
-      playlist: plPost ? { title: plPost.title, url: field(plPost, 'link') || field(plPost, 'listen'), blurb: blurbOf(plPost) } : null,
-      featured: ftPost ? { name: ftPost.title, mixUrl: field(ftPost, 'mix') || field(ftPost, 'link'), link: field(ftPost, 'instagram') || field(ftPost, 'link'),
-                           image: ftPost.image, blurb: blurbOf(ftPost) } : null,
-      photos: media.filter(m => x.sr.photoWords.test(mediaText(m))).map(m => m.source_url).filter(Boolean).slice(0, 5)
-    };
-  });
-
-  // Hot Out The Oven Records — releases + artists.
-  const releases = all.filter(p => tagged(p, releaseId)).map(p => ({
-    title: p.title, artist: field(p, 'artist') || 'Hot Out The Oven Records', dateISO: p.dateISO, image: p.image,
-    type: field(p, 'type') || '', listenUrl: field(p, 'listen') || field(p, 'link') || field(p, 'spotify') || field(p, 'soundcloud') || field(p, 'bandcamp') || '',
-    buyUrl: field(p, 'buy') || '', blurb: blurbOf(p), link: p.link
-  })).sort((a, b) => b.dateISO.localeCompare(a.dateISO));
-  const artists = all.filter(p => tagged(p, artistId)).map(p => ({
-    name: p.title, image: p.image, blurb: blurbOf(p),
-    links: [['Instagram', field(p, 'instagram')], ['SoundCloud', field(p, 'soundcloud')], ['Spotify', field(p, 'spotify')], ['Bandcamp', field(p, 'bandcamp')], ['YouTube', field(p, 'youtube')], ['Links', field(p, 'link')]].filter(l => l[1])
-  }));
 
   return {
     events: events.sort((a, b) => a.dateISO.localeCompare(b.dateISO)),
     past: past.sort((a, b) => b.dateISO.localeCompare(a.dateISO)),
-    photos, series, hoto: { releases, artists }
+    photos
   };
 }
 
@@ -671,9 +535,7 @@ async function load(force) {
     const data = {
       events: live.events.length ? live.events : CONFIG.fallbackEvents,
       past: live.past.length ? live.past : CONFIG.fallbackPast,
-      photos: live.photos.length ? live.photos : CONFIG.fallbackPhotos,
-      series: live.series,
-      hoto: live.hoto
+      photos: live.photos.length ? live.photos : CONFIG.fallbackPhotos
     };
     writeCache(data);
     apply(data);
@@ -684,6 +546,7 @@ async function load(force) {
     apply({ events: CONFIG.fallbackEvents, past: CONFIG.fallbackPast, photos: CONFIG.fallbackPhotos });
     log('[wordpress] could not reach WordPress (' + err.message + ') — showing built-in list');
   }
+  $('#admin-last').textContent = new Date().toLocaleString();
 }
 
 /* ---------- rendering ---------- */
@@ -724,10 +587,7 @@ function apply(data) {
   state.events = data.events || [];
   state.past = data.past || [];
   state.photos = (data.photos && data.photos.length ? data.photos : CONFIG.fallbackPhotos) || [];
-  state.series = data.series || {};
-  state.hoto = data.hoto || { releases: [], artists: [] };
   renderHome(); renderEvents(); renderCalendar(); renderArchive(); renderMedia();
-  CONFIG.series.forEach(renderSeries); renderHoto();
 }
 
 function renderHome() {
@@ -739,13 +599,10 @@ function renderHome() {
     if (next.image) $('#hero-flyer').src = next.image;
     const t = $('#hero-tickets');
     if (next.ticketUrl) { t.href = next.ticketUrl; t.style.display = ''; } else { t.style.display = 'none'; }
-    const pr = $('#hero-promo');
-    if (next.promo) { pr.style.display = ''; $('#hero-promo-code').textContent = next.promo; } else pr.style.display = 'none';
   }
   $('#ticker').innerHTML = (() => {
     const bits = state.events.map((e, i) =>
-      ['🍪','🧁','🍩'][i % 3] + ' ' + esc(e.title) + ' · ' + esc(fmtDate(e.dateISO, e.endISO)) + (e.venue ? ' · ' + esc(e.venue) : '') +
-      (e.promo ? ' · Promo Code: <strong style="color:var(--bg);background:var(--ink);padding:1px 8px;border-radius:999px">' + esc(e.promo) + '</strong>' : ''));
+      ['🍪','🧁','🍩'][i % 3] + ' ' + esc(e.title) + ' · ' + esc(fmtDate(e.dateISO, e.endISO)) + (e.venue ? ' · ' + esc(e.venue) : ''));
     if (!bits.length) bits.push('🧁 New dates dropping soon');
     const run = bits.join(' &nbsp;&nbsp;•&nbsp;&nbsp; ') + ' &nbsp;&nbsp;•&nbsp;&nbsp; ';
     return run + run;
@@ -858,191 +715,9 @@ function renderMedia() {
   });
 }
 
-/* ---------- Weird Wubz page ---------- */
-/* Turns a music link into a player. Returns '' if we don't know how to embed it (a button is shown instead). */
-function playerFor(url) {
-  const u = String(url || '').trim();
-  if (!u) return '';
-  let m;
-  if ((m = u.match(/open\.spotify\.com\/(playlist|album|track|artist|show|episode)\/([A-Za-z0-9]+)/)))
-    return { tall: true, html: '<iframe src="https://open.spotify.com/embed/' + m[1] + '/' + m[2] + '?theme=0" allow="autoplay;clipboard-write;encrypted-media;fullscreen;picture-in-picture" loading="lazy"></iframe>' };
-  if (/soundcloud\.com\//.test(u))
-    return { tall: false, html: '<iframe src="https://w.soundcloud.com/player/?url=' + encodeURIComponent(u) + '&color=%23ff5fa2&auto_play=false&show_teaser=false" allow="autoplay" loading="lazy"></iframe>' };
-  if ((m = u.match(/mixcloud\.com(\/[^?#]+)/)))
-    return { tall: false, html: '<iframe src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=' + encodeURIComponent(m[1]) + '" allow="autoplay" loading="lazy"></iframe>' };
-  if ((m = u.match(/[?&]list=([\w-]+)/)) && /youtu/.test(u))
-    return { tall: false, html: '<iframe src="https://www.youtube.com/embed/videoseries?list=' + m[1] + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>' };
-  if ((m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/)))
-    return { tall: false, html: '<iframe src="https://www.youtube.com/embed/' + m[1] + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>' };
-  if ((m = u.match(/music\.apple\.com(\/.+)/)))
-    return { tall: true, html: '<iframe src="https://embed.music.apple.com' + m[1] + '" allow="autoplay *;encrypted-media *;fullscreen *;clipboard-write" loading="lazy"></iframe>' };
-  return '';
-}
-
-/* ---------- Series pages: one layout, built once per CONFIG.series entry ---------- */
-function buildSeriesPages() {
-  const host = $('#series-pages');
-  CONFIG.series.forEach(sr => {
-    const sec = el('section', 'page');
-    sec.id = 'page-' + sr.id;
-    sec.innerHTML =
-      '<div class="wrap">' +
-        '<h2 class="sec">' + sr.titleHtml + '</h2>' +
-        '<p class="lede">' + esc(sr.lede) + '</p>' +
-        '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px" id="' + sr.id + '-grid"></div>' +
-        '<div class="listen"><article class="card listen-card" id="' + sr.id + '-playlist"></article><article class="card listen-card" id="' + sr.id + '-featured"></article></div>' +
-        '<div style="margin-top:64px"><h2 class="sec">' + sr.pastTitleHtml + '</h2><p class="lede">' + esc(sr.pastLede) + '</p>' +
-          '<div class="chips" id="' + sr.id + '-chips"></div><div class="grid archive" id="' + sr.id + '-archive"></div></div>' +
-        '<div style="margin-top:64px">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px">' +
-            '<h2 class="sec" style="margin:0">On the <span style="color:var(--pink)">\'Gram</span></h2>' +
-            '<a class="btn-ghost" id="' + sr.id + '-ig" href="' + esc(sr.instagram) + '" target="_blank" rel="noopener">Follow ' + esc(sr.igHandle) + ' →</a></div>' +
-          '<p class="lede">Latest pictures.</p>' +
-          '<div class="carousel" id="' + sr.id + '-carousel"></div>' +
-          '<div class="car-nav"><button id="' + sr.id + '-prev" aria-label="Scroll left">‹</button><button id="' + sr.id + '-next" aria-label="Scroll right">›</button></div>' +
-        '</div>' +
-      '</div>';
-    host.appendChild(sec);
-  });
-}
-
-function renderSeries(sr) {
-  const S = state.series[sr.id] || { photos: [], playlist: null, featured: null };
-  const id = sr.id;
-  // Upcoming
-  const g = $('#' + id + '-grid'); g.innerHTML = '';
-  const up = state.events.filter(ev => inSeries(ev, sr));
-  if (!up.length) g.appendChild(el('p', 'dim', 'No ' + sr.name + ' dates on the books right now — check back soon.'));
-  up.forEach(ev => g.appendChild(eventCard(ev)));
-
-  // Playlist card
-  const pl = S.playlist && S.playlist.url ? S.playlist : { title: sr.playlistTitle, url: sr.playlistUrl, blurb: sr.playlistBlurb };
-  const plBox = $('#' + id + '-playlist');
-  const plPlayer = playerFor(pl.url);
-  plBox.innerHTML =
-    (plPlayer ? '<div class="embed' + (plPlayer.tall ? ' tall' : '') + '">' + plPlayer.html + '</div>'
-              : '<div class="empty"><div class="ring">♫</div><div>' + (pl.url ? 'Playlist link added — tap below to open it.' : 'Playlist coming soon.') + '</div></div>') +
-    '<div class="body"><div class="kicker">The playlist</div><h3>' + esc(pl.title || sr.playlistTitle) + '</h3>' +
-    '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">' + esc(pl.blurb || '') + '</p>' +
-    (pl.url ? '<p style="margin:auto 0 0"><a class="btn" style="padding:12px 24px;font-size:14px" href="' + esc(pl.url) + '" target="_blank" rel="noopener">Open the playlist</a></p>' : '') +
-    '</div>';
-
-  // Featured artist card
-  const ft = S.featured && S.featured.name ? S.featured : sr.featured;
-  const ftBox = $('#' + id + '-featured');
-  const ftPlayer = playerFor(ft.mixUrl);
-  if (!ft.name) {
-    ftBox.innerHTML = '<div class="empty"><div class="ring">🎧</div><div>Featured artist coming soon.</div></div>' +
-      '<div class="body"><div class="kicker">Featured artist</div><h3>Your name here?</h3>' +
-      '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">Every so often one artist takes over with a curated ' + esc(sr.name) + ' mix. Send us yours.</p>' +
-      '<p style="margin:auto 0 0"><a class="btn-ghost" href="#about">Get in touch →</a></p></div>';
-  } else {
-    ftBox.innerHTML =
-      (ftPlayer ? '<div class="embed' + (ftPlayer.tall ? ' tall' : '') + '">' + ftPlayer.html + '</div>'
-                : (ft.image ? '<div class="sq"><img src="' + esc(ft.image) + '" alt="' + esc(ft.name) + '" loading="lazy"></div>' : '')) +
-      '<div class="body"><div class="kicker">Featured artist · curated mix</div>' +
-      '<div class="who">' + (ft.image && ftPlayer ? '<img src="' + esc(ft.image) + '" alt="' + esc(ft.name) + '" loading="lazy">' : '') + '<h3>' + esc(ft.name) + '</h3></div>' +
-      '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">' + esc(ft.blurb || '') + '</p>' +
-      '<p style="margin:auto 0 0;display:flex;gap:10px;flex-wrap:wrap">' +
-        (ft.mixUrl ? '<a class="btn" style="padding:12px 24px;font-size:14px" href="' + esc(ft.mixUrl) + '" target="_blank" rel="noopener">Play the mix</a>' : '') +
-        (ft.link ? '<a class="btn-ghost" href="' + esc(ft.link) + '" target="_blank" rel="noopener">Follow</a>' : '') +
-      '</p></div>';
-  }
-
-  // Past archive
-  const past = state.past.filter(ev => inSeries(ev, sr));
-  const years = Array.from(new Set(past.map(p => p.dateISO.slice(0, 4)))).sort().reverse();
-  const chips = $('#' + id + '-chips'); chips.innerHTML = '';
-  if (!years.includes(state.seriesYear[id])) state.seriesYear[id] = 'all';
-  [['all', 'ALL']].concat(years.map(y => [y, y])).forEach(([val, label]) => {
-    const b = el('button', 'chip' + (state.seriesYear[id] === val ? ' active' : ''), label);
-    b.onclick = () => { state.seriesYear[id] = val; renderSeries(sr); };
-    chips.appendChild(b);
-  });
-  const ag = $('#' + id + '-archive'); ag.innerHTML = '';
-  const shown = past.filter(p => state.seriesYear[id] === 'all' || p.dateISO.slice(0, 4) === state.seriesYear[id]);
-  if (!shown.length) ag.appendChild(el('p', 'dim', 'Nothing archived yet.'));
-  shown.forEach(p => ag.appendChild(eventCard(p, true)));
-
-  // Picture strip — config list first, then matching WordPress media, then the show flyers.
-  $('#' + id + '-ig').href = sr.instagram;
-  let pics = (sr.photos || []).filter(Boolean).slice(0, 5);
-  if (!pics.length) pics = (S.photos || []).slice(0, 5);
-  if (!pics.length) pics = up.concat(past).map(e => e.image).filter(Boolean).slice(0, 5);
-  const car = $('#' + id + '-carousel'); car.innerHTML = '';
-  if (!pics.length) {
-    car.appendChild(el('div', '', '<div class="vempty"><div class="ring">📸</div><div class="mono">add 5 pictures — see WORDPRESS-GUIDE.md</div></div>'));
-  } else {
-    pics.concat(pics).forEach((src, i) => {
-      const d = el('div');
-      const ig = String(src).match(/instagram\.com\/(?:p|reel)\/([\w-]+)/);
-      d.innerHTML = ig
-        ? '<iframe src="https://www.instagram.com/p/' + ig[1] + '/embed/" title="Instagram post" loading="lazy" scrolling="no" allowtransparency="true"></iframe>'
-        : '<a href="' + esc(sr.instagram) + '" target="_blank" rel="noopener"><img src="' + esc(src) + '" alt="' + esc(sr.name) + ' photo" loading="lazy"></a>';
-      if (i >= pics.length) d.setAttribute('aria-hidden', 'true');
-      car.appendChild(d);
-    });
-  }
-}
-
-/* ---------- Hot Out The Oven Records ---------- */
-function releaseCard(r, small) {
-  const c = el('article', 'card');
-  c.innerHTML =
-    '<div class="sq">' + (r.image ? '<img src="' + esc(r.image) + '" alt="' + esc(r.title) + ' cover" loading="lazy">' : '') + '</div>' +
-    '<div class="body">' +
-      '<div class="kicker">' + esc(r.type || 'Release') + (r.dateISO ? ' · ' + esc(fmtDate(r.dateISO)) + ' ' + r.dateISO.slice(0, 4) : '') + '</div>' +
-      '<h3>' + esc(r.title) + '</h3>' +
-      '<p class="artist">' + esc(r.artist) + '</p>' +
-      (!small && r.blurb ? '<p class="muted" style="margin:8px 0 0;font-size:14px;line-height:1.5">' + esc(r.blurb) + '</p>' : '') +
-      '<div class="links">' +
-        (r.listenUrl ? '<a href="' + esc(r.listenUrl) + '" target="_blank" rel="noopener">Listen</a>' : '') +
-        (r.buyUrl ? '<a href="' + esc(r.buyUrl) + '" target="_blank" rel="noopener">Buy</a>' : '') +
-      '</div>' +
-    '</div>';
-  return c;
-}
-
-function renderHoto() {
-  const H = CONFIG.hoto;
-  $('#hoto-link').href = H.labelUrl;
-  const all = (state.hoto.releases && state.hoto.releases.length ? state.hoto.releases : H.fallbackReleases) || [];
-  const cutoff = new Date(Date.now() - H.newDays * 86400000).toISOString().slice(0, 10);
-  let fresh = all.filter(r => r.dateISO >= cutoff);
-  if (!fresh.length && all.length) fresh = [all[0]];           // always show at least the newest one as "New"
-  const recent = all.filter(r => !fresh.includes(r)).slice(0, 12);
-
-  const nb = $('#hoto-new'); nb.innerHTML = '';
-  if (!fresh.length) nb.appendChild(el('p', 'dim', 'First release is in the oven. Check back soon.'));
-  fresh.forEach(r => nb.appendChild(releaseCard(r, false)));
-
-  const rb = $('#hoto-recent'); rb.innerHTML = '';
-  if (!recent.length) rb.appendChild(el('p', 'dim', all.length ? 'Nothing older yet.' : 'Nothing here yet.'));
-  recent.forEach(r => rb.appendChild(releaseCard(r, true)));
-
-  const artists = (state.hoto.artists && state.hoto.artists.length ? state.hoto.artists : H.fallbackArtists) || [];
-  const ab = $('#hoto-artists'); ab.innerHTML = '';
-  if (!artists.length) ab.appendChild(el('p', 'dim', 'Artist bios coming soon.'));
-  artists.forEach(a => {
-    const c = el('article', 'card');
-    c.innerHTML = '<div class="body">' +
-      '<div class="who">' + (a.image ? '<img src="' + esc(a.image) + '" alt="' + esc(a.name) + '" loading="lazy">' : '') + '<h3>' + esc(a.name) + '</h3></div>' +
-      (a.blurb ? '<p class="muted" style="margin:0;font-size:14px;line-height:1.55">' + esc(a.blurb) + '</p>' : '') +
-      '<div class="socials">' + (a.links || []).map(l => '<a href="' + esc(l[1]) + '" target="_blank" rel="noopener">' + esc(l[0]) + '</a>').join('') + '</div>' +
-      '</div>';
-    ab.appendChild(c);
-  });
-
-  const cta = $('#hoto-submit-cta');
-  cta.innerHTML = H.submitUrl
-    ? '<a class="btn" href="' + esc(H.submitUrl) + '" target="_blank" rel="noopener">Submit your music</a>'
-    : '<span class="soon">Submission form coming soon</span>';
-}
-
 /* ---------- carousel: auto-scroll, pause on hover, drag, infinite ---------- */
-buildSeriesPages();
-function makeCarousel(carSel, prevSel, nextSel) {
-  const car = $(carSel);
+(function carousel() {
+  const car = $('#carousel');
   let pos = null, paused = false, drag = null;
   const tick = () => {
     const half = car.scrollWidth / 2;
@@ -1065,11 +740,9 @@ function makeCarousel(carSel, prevSel, nextSel) {
     if (drag.moved) car.scrollLeft = drag.sl - dx;
   });
   ['pointerup', 'pointercancel'].forEach(ev => car.addEventListener(ev, () => { drag = null; pos = null; }));
-  $(prevSel).onclick = () => { car.scrollBy({ left: -336, behavior: 'smooth' }); pos = null; };
-  $(nextSel).onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
-}
-makeCarousel('#carousel', '#car-prev', '#car-next');
-CONFIG.series.forEach(sr => makeCarousel('#' + sr.id + '-carousel', '#' + sr.id + '-prev', '#' + sr.id + '-next'));
+  $('#car-prev').onclick = () => { car.scrollBy({ left: -336, behavior: 'smooth' }); pos = null; };
+  $('#car-next').onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
+})();
 
 /* ---------- routing ---------- */
 function show(page) {
@@ -1079,8 +752,7 @@ function show(page) {
 }
 function routeFromHash() {
   const page = (location.hash || '#home').slice(1);
-  const pages = ['home','events','media','hoto','roster','about'].concat(CONFIG.series.map(sr => sr.id));
-  show(pages.includes(page) ? page : 'home');
+  show(['home','events','media','roster','about'].includes(page) ? page : 'home');
 }
 window.addEventListener('hashchange', routeFromHash);
 
@@ -1088,13 +760,28 @@ window.addEventListener('hashchange', routeFromHash);
 $('#cal-prev').onclick = () => { if (state.calM === 0) { state.calM = 11; state.calY--; } else state.calM--; renderCalendar(); };
 $('#cal-next').onclick = () => { if (state.calM === 11) { state.calM = 0; state.calY++; } else state.calM++; renderCalendar(); };
 
-/* ---------- status log (visible in the browser console; the admin page lives at /admin/) ---------- */
-function log(line) { try { console.log('[bakedup] ' + line); } catch (e) {} }
+/* ---------- admin panel ---------- */
+function log(line) {
+  const box = $('#admin-log');
+  box.appendChild(el('div', '', esc(line)));
+  box.scrollTop = box.scrollHeight;
+}
+$('#admin-toggle').onclick = (e) => { e.preventDefault(); $('#admin').classList.toggle('open'); };
+$('#btn-refresh').onclick = async () => {
+  const pill = $('#admin-pill'); pill.textContent = 'Working…'; pill.classList.add('busy');
+  log('[refresh] reading WordPress…');
+  await load(true);
+  pill.textContent = 'Idle · all synced'; pill.classList.remove('busy');
+};
+$('#btn-cache').onclick = async () => {
+  localStorage.removeItem(CACHE_KEY);
+  log('[cache] cleared saved copy');
+  await load(true);
+};
 
 /* ---------- go ---------- */
 routeFromHash();
-// ?refresh=1 (sent by the admin page) throws away the saved copy and re-reads WordPress.
-load(/[?&]refresh=1/.test(location.search));
+load(false);
 setInterval(() => load(false), CONFIG.cacheMinutes * 60000);
 </script>
 </body>
