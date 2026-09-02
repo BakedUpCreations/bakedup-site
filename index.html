@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Baked Up — Turning friends into family.</title>
+<meta name="description" content="Baked Up — events, artists and good times out of Austin, Texas. Turning friends into family.">
+<meta property="og:title" content="Baked Up">
+<meta property="og:description" content="Turning friends into family.">
+<link rel="icon" href="https://bakedupcreations.com/wp-content/uploads/2018/07/cropped-12133-tongue-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0a14; --card:#171022; --ink:#f5f0f7; --pink:#ff5fa2; --pink-soft:#ffd7e8;
+    --purple:#b98aff; --purple-deep:#7a3cff; --max:1180px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);overflow-x:clip}
+  body{font-family:'Space Grotesk',system-ui,sans-serif;color:var(--ink)}
+  a{color:var(--pink);text-decoration:none}
+  a:hover{color:#ff8fc0}
+  img{max-width:100%;display:block}
+  h1,h2,h3,h4{font-family:'Unbounded',sans-serif;text-transform:uppercase;margin:0}
+  ::selection{background:var(--pink);color:var(--bg)}
+  button{font-family:'Space Grotesk',sans-serif}
+
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes treatFall{0%{transform:translateY(-12vh) rotate(0)}100%{transform:translateY(112vh) rotate(340deg)}}
+  @keyframes pulseGlow{0%,100%{opacity:.55}50%{opacity:1}}
+
+  /* falling treats */
+  .treats{position:fixed;top:0;bottom:0;width:56px;z-index:5;pointer-events:none}
+  .treats.l{left:0} .treats.r{right:0}
+  .treats span{position:absolute;font-size:24px}
+  @media(max-width:1240px){.treats{display:none}}
+
+  /* sticky menu + awning */
+  nav.site{position:sticky;top:0;z-index:50}
+  .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px)}
+  .nav-inner img{height:72px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
+  .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
+  .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
+  .menu a:hover{background:var(--pink);color:var(--bg)}
+  .menu a.active{background:var(--pink);color:var(--bg)}
+  .awning{line-height:0}
+  .awning .stripe{height:34px;background:repeating-linear-gradient(90deg,var(--pink) 0 40px,var(--pink-soft) 40px 80px)}
+  .awning .scallop{height:20px;background-image:radial-gradient(circle 20px at 20px 0,var(--pink) 97%,transparent 100%),radial-gradient(circle 20px at 60px 0,var(--pink-soft) 97%,transparent 100%);background-size:80px 20px;background-repeat:repeat-x}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
+  .page{display:none}
+  .page.active{display:block}
+
+  /* marquee */
+  .ticker{overflow:hidden;background:var(--pink);color:var(--bg);padding:10px 0;font-family:'Unbounded',sans-serif;font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+  .ticker > div{display:inline-block;animation:marquee 26s linear infinite}
+
+  /* hero */
+  .hero{display:grid;grid-template-columns:minmax(280px,1.1fr) 1fr;gap:40px;align-items:center}
+  @media(max-width:820px){.hero{grid-template-columns:1fr}}
+  .flyer-glow{position:relative}
+  .flyer-glow::before{content:"";position:absolute;inset:-14px;border-radius:26px;background:linear-gradient(135deg,var(--pink),var(--purple-deep));filter:blur(28px);opacity:.55}
+  .flyer{position:relative;aspect-ratio:1/1;border-radius:20px;overflow:hidden;border:3px solid var(--pink);transform:rotate(-2deg);background:#0b0811}
+  .flyer img{width:100%;height:100%;object-fit:cover}
+  .badge{display:inline-block;background:var(--bg);border:2px solid var(--pink);color:var(--pink);font-family:'Unbounded',sans-serif;font-weight:700;font-size:12px;letter-spacing:.2em;padding:8px 16px;border-radius:999px;text-transform:uppercase}
+  h1.show{font-size:clamp(36px,6vw,72px);font-weight:900;margin:18px 0 6px;line-height:.95}
+  .btn{display:inline-block;background:var(--pink);color:var(--bg);font-weight:700;padding:15px 30px;border-radius:999px;font-size:16px;border:0;cursor:pointer}
+  .btn:hover{background:#ff8fc0}
+  .btn-ghost{display:inline-block;border:1px solid rgba(255,95,162,.6);color:var(--ink);font-weight:700;padding:12px 26px;border-radius:999px;cursor:pointer;background:none}
+  .btn-ghost:hover{background:var(--pink);color:var(--bg)}
+
+  .grid{display:grid;gap:22px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--card);border:1px solid rgba(122,60,255,.4);border-radius:18px;overflow:hidden}
+  .card:hover{border-color:var(--pink)}
+  .card .sq{aspect-ratio:1/1;background:#0b0811}
+  .card .sq img{width:100%;height:100%;object-fit:cover}
+  .card .body{padding:20px 22px 24px}
+  .date{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;color:var(--purple);letter-spacing:.14em;margin-bottom:8px}
+  .muted{color:rgba(245,240,247,.65)}
+  .dim{color:rgba(245,240,247,.5)}
+  h2.sec{font-size:clamp(24px,3.4vw,38px);font-weight:900;margin:0 0 6px}
+  .lede{color:rgba(245,240,247,.6);margin:0 0 26px}
+
+  /* calendar */
+  .cal{background:var(--card);border:1px solid rgba(122,60,255,.35);border-radius:18px;padding:26px 26px 30px;margin-top:40px}
+  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .cal-head button{background:none;border:1px solid rgba(255,95,162,.5);color:var(--ink);width:38px;height:38px;border-radius:999px;font-size:18px;cursor:pointer}
+  .cal-head button:hover{background:var(--pink);color:var(--bg)}
+  .cal-head .label{font-family:'Unbounded',sans-serif;font-size:20px;font-weight:700}
+  .dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .dow{text-align:center;font-size:12px;letter-spacing:.1em;color:rgba(245,240,247,.5);margin-bottom:8px}
+  .day{min-height:58px;border-radius:10px;padding:6px;background:rgba(255,255,255,.04)}
+  .day.out{background:transparent}
+  .day.has{outline:1px solid rgba(255,95,162,.7);background:rgba(255,95,162,.12)}
+  .day .n{font-size:14px}
+  .day .ev{font-size:10px;font-weight:700;color:var(--bg);background:var(--pink);border-radius:6px;padding:2px 4px;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cal-list{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+  .cal-list .row{display:flex;align-items:baseline;gap:14px;padding:10px 14px;background:rgba(255,95,162,.08);border-radius:10px;flex-wrap:wrap}
+  .cal-list .row b{font-family:'Unbounded',sans-serif;color:var(--pink);font-size:14px;min-width:70px}
+
+  /* archive */
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .chip{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;padding:9px 18px;border-radius:999px;cursor:pointer;border:1px solid rgba(255,95,162,.5);background:none;color:var(--ink)}
+  .chip.active{background:var(--pink);color:var(--bg)}
+  .archive{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+  .archive .card{border-color:rgba(122,60,255,.28)}
+  .archive .sq{filter:saturate(.85)}
+
+  /* media */
+  .carousel{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;cursor:grab;scrollbar-width:none}
+  .carousel::-webkit-scrollbar{display:none}
+  .carousel > div{flex:0 0 320px;height:320px;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.25)}
+  .carousel img{width:100%;height:100%;object-fit:cover}
+  .car-nav{display:flex;gap:10px;justify-content:center;margin-top:10px}
+  .car-nav button{background:none;border:1px solid rgba(255,95,162,.5);color:var(--ink);width:42px;height:42px;border-radius:999px;font-size:18px;cursor:pointer}
+  .car-nav button:hover{background:var(--pink);color:var(--bg)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));grid-auto-rows:220px;gap:14px;margin-top:40px}
+  .gallery > figure{margin:0;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.25)}
+  .gallery > figure:first-child{grid-column:span 2;grid-row:span 2}
+  .gallery img{width:100%;height:100%;object-fit:cover}
+  .videos{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
+  .videos > div{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.35)}
+  .videos iframe{width:100%;height:100%;border:0}
+  .vempty{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:rgba(245,240,247,.5)}
+  .vempty .ring{width:56px;height:56px;border-radius:999px;border:2px solid rgba(255,95,162,.6);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--pink);animation:pulseGlow 2.4s ease-in-out infinite}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+
+  /* roster */
+  .roster{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .roster .ph{aspect-ratio:3/2;background:#0b0811}
+  .roster .ph img{width:100%;height:100%;object-fit:cover}
+  .links{display:flex;gap:16px;font-size:14px;font-weight:500;flex-wrap:wrap}
+  .label-cta{margin-top:40px;background:linear-gradient(135deg,rgba(255,95,162,.14),rgba(122,60,255,.14));border:1px solid rgba(255,95,162,.35);border-radius:18px;padding:32px;text-align:center}
+
+  /* about + forms */
+  .prose p{font-size:17px;line-height:1.75;color:rgba(245,240,247,.82);margin:0 0 18px;text-wrap:pretty}
+  .lanes{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .lane{background:var(--card);border:1px solid rgba(122,60,255,.35);border-radius:16px;padding:24px}
+  form.dj{background:var(--card);border:1px solid rgba(255,95,162,.35);border-radius:18px;padding:28px;display:grid;gap:16px}
+  form.dj .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  form.dj label{display:flex;flex-direction:column;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,240,247,.6)}
+  form.dj input,form.dj textarea{background:rgba(255,255,255,.05);border:1px solid rgba(255,95,162,.3);border-radius:10px;padding:12px 14px;color:var(--ink);font-family:'Space Grotesk',sans-serif;font-size:15px}
+  form.dj textarea{resize:vertical}
+  .booking{background:linear-gradient(135deg,rgba(255,95,162,.16),rgba(122,60,255,.16));border:1px solid rgba(255,95,162,.4);border-radius:22px;padding:44px 32px;text-align:center}
+  .socials{display:flex;gap:14px;justify-content:center;margin-top:30px;flex-wrap:wrap;font-size:14px;font-weight:700}
+  .socials a{border:1px solid rgba(255,95,162,.6);padding:10px 20px;border-radius:999px;color:var(--ink)}
+  .socials a:hover{background:var(--pink);color:var(--bg)}
+
+  /* admin */
+  .admin-entry{margin-top:56px;padding-top:24px;border-top:1px solid rgba(255,255,255,.07);text-align:center}
+  .admin-entry a{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,247,.35);font-weight:600}
+  .admin-entry a:hover{color:var(--pink)}
+  .admin{margin-top:22px;background:#120d1b;border:1px solid rgba(122,60,255,.4);border-radius:18px;padding:28px;display:none}
+  .admin.open{display:block}
+  .admin-note{background:rgba(122,60,255,.1);border:1px solid rgba(122,60,255,.4);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+  .admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .admin-actions button{text-align:left;background:rgba(255,95,162,.1);border:1px solid rgba(255,95,162,.45);border-radius:14px;padding:20px;cursor:pointer;color:var(--ink)}
+  .admin-actions button:hover{background:rgba(255,95,162,.2)}
+  .admin-actions button .t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px}
+  .pill{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:rgba(122,60,255,.2);color:var(--purple)}
+  .pill.busy{background:var(--pink);color:var(--bg)}
+  .log{margin-top:16px;background:#0b0811;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 18px;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.9;color:rgba(245,240,247,.75);max-height:180px;overflow:auto}
+
+  footer{border-top:1px solid rgba(255,95,162,.25);padding:36px 32px 44px;text-align:center}
+  footer .row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="treats l" aria-hidden="true">
+  <span style="left:8px;font-size:28px;animation:treatFall 11s linear infinite">🧁</span>
+  <span style="left:22px;animation:treatFall 14s linear infinite;animation-delay:-4s">🍪</span>
+  <span style="left:4px;font-size:20px;animation:treatFall 17s linear infinite;animation-delay:-9s">🍩</span>
+  <span style="left:26px;animation:treatFall 13s linear infinite;animation-delay:-7s">🍪</span>
+</div>
+<div class="treats r" aria-hidden="true">
+  <span style="right:8px;font-size:26px;animation:treatFall 12s linear infinite;animation-delay:-2s">🍪</span>
+  <span style="right:22px;animation:treatFall 16s linear infinite;animation-delay:-10s">🧁</span>
+  <span style="right:4px;font-size:20px;animation:treatFall 14s linear infinite;animation-delay:-5s">🧁</span>
+  <span style="right:24px;animation:treatFall 18s linear infinite;animation-delay:-12s">🍩</span>
+</div>
+
+<nav class="site">
+  <div class="nav-inner">
+    <a href="#home"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/baked-up-trademarked-full-color-white-r.png?w=525" alt="Baked Up"></a>
+    <p class="slogan">Turning friends into family.</p>
+    <div class="menu" id="menu">
+      <a href="#home" data-page="home">Home</a>
+      <a href="#events" data-page="events">Events</a>
+      <a href="#media" data-page="media">Media</a>
+      <a href="#roster" data-page="roster">Roster</a>
+      <a href="#about" data-page="about">About &amp; Contact</a>
+    </div>
+  </div>
+  <div class="awning"><div class="stripe"></div><div class="scallop"></div></div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<main>
+<section class="page active" id="page-home">
+  <div class="ticker"><div id="ticker">🍪 Loading upcoming treats…</div></div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="flyer-glow">
+        <div class="flyer"><img id="hero-flyer" alt="Next show flyer" src="https://bakedupcreations.com/wp-content/uploads/2026/06/unnamed-24.png?w=500"></div>
+      </div>
+      <div>
+        <div class="badge">Next one up</div>
+        <h1 class="show" id="hero-title">Freaky<br><span style="color:var(--pink)">Deaky</span></h1>
+        <p style="font-family:'Unbounded',sans-serif;font-size:clamp(15px,2vw,20px);color:var(--purple);margin:0 0 6px;letter-spacing:.06em" id="hero-date">Oct 30 – 31, 2026</p>
+        <p style="font-size:17px;color:rgba(245,240,247,.75);margin:0 0 22px" id="hero-venue">Travis County Expo Center · Austin, TX</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <a class="btn" id="hero-tickets" href="https://freakydeaky.com/" target="_blank" rel="noopener">Get tickets</a>
+          <span style="font-size:15px;color:rgba(245,240,247,.7)">promo code <strong style="color:var(--pink);font-family:'Unbounded',sans-serif">BAKEDUP</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:0">
+    <h2 class="sec">Also <span style="color:var(--purple)">baking</span></h2>
+    <p class="lede">More treats on the tray.</p>
+    <div class="grid cards" id="home-more"></div>
+  </div>
+</section>
+
+<!-- ============ EVENTS ============ -->
+<section class="page" id="page-events">
+  <div class="wrap">
+    <h2 class="sec">Upcoming <span style="color:var(--pink)">Treats</span></h2>
+    <p class="lede">Pull up. Bring your friends — leave with family.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px" id="events-grid"></div>
+
+    <div class="cal">
+      <div class="cal-head">
+        <button id="cal-prev" aria-label="Previous month">‹</button>
+        <div class="label" id="cal-label">—</div>
+        <button id="cal-next" aria-label="Next month">›</button>
+      </div>
+      <div class="dow"><div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div></div>
+      <div class="days" id="cal-days"></div>
+      <div class="cal-list" id="cal-list"></div>
+    </div>
+
+    <div style="margin-top:64px">
+      <h2 class="sec">The <span style="color:var(--purple)">Archive</span></h2>
+      <p class="lede">Eight years of parties. Every treat we've pulled out of the oven.</p>
+      <div class="chips" id="archive-chips"></div>
+      <div class="grid archive" id="archive-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MEDIA ============ -->
+<section class="page" id="page-media">
+  <div class="wrap">
+    <h2 class="sec">Fresh Out The <span style="color:var(--pink)">Oven</span></h2>
+    <p class="lede">Photos and videos from the Squaad — everything here comes from WordPress.</p>
+    <div class="carousel" id="carousel"></div>
+    <div class="car-nav"><button id="car-prev" aria-label="Scroll left">‹</button><button id="car-next" aria-label="Scroll right">›</button></div>
+    <div class="gallery" id="gallery"></div>
+
+    <h3 style="font-size:clamp(20px,2.6vw,28px);font-weight:900;margin:56px 0 8px">The <span style="color:var(--purple)">Videos</span></h3>
+    <p class="lede">Recaps, sets &amp; livestreams. Add YouTube links in <code>config.videos</code>.</p>
+    <div class="videos" id="videos"></div>
+  </div>
+</section>
+
+<!-- ============ ROSTER ============ -->
+<section class="page" id="page-roster">
+  <div class="wrap">
+    <h2 class="sec">Artist <span style="color:var(--pink)">Roster</span></h2>
+    <p class="lede">Managed by Baked Up · Hot Out The Oven Records</p>
+    <div class="grid roster">
+      <article class="card">
+        <div class="ph"></div>
+        <div class="body">
+          <h3 style="font-size:20px;margin-bottom:6px">KGTO</h3>
+          <div class="links">
+            <a href="https://open.spotify.com/artist/3kwusaz6TiBpmzZIn0L3wv" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://soundcloud.com/kgtokai" target="_blank" rel="noopener">SoundCloud</a>
+            <a href="https://linktr.ee/kgtokai" target="_blank" rel="noopener">Linktree</a>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/ogk-website-1.png?w=840" alt="OGK BBY"></div>
+        <div class="body">
+          <h3 style="font-size:20px;margin-bottom:6px">OGK BBY</h3>
+          <div class="links">
+            <a href="https://open.spotify.com/artist/1hoP26CG0T3sJuJl0QAjqq" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://soundcloud.com/ogkbby" target="_blank" rel="noopener">SoundCloud</a>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="https://bakedupcreations.com/wp-content/uploads/2020/08/saratonin-website.png?w=840" alt="Saratonin"></div>
+        <div class="body">
+          <h3 style="font-size:20px;margin-bottom:6px">Saratonin</h3>
+          <div class="links">
+            <a href="https://open.spotify.com/artist/3rqMb6scjKbpRjyNVgy56m" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://soundcloud.com/saratonintunez" target="_blank" rel="noopener">SoundCloud</a>
+            <a href="https://linktr.ee/saratonintunez" target="_blank" rel="noopener">Linktree</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="label-cta">
+      <h3 style="font-size:20px;margin-bottom:10px">Hot Out The Oven Records</h3>
+      <p class="muted" style="margin:0 0 20px">Our in-house label — releases, remixes and fresh heat.</p>
+      <a class="btn-ghost" href="https://bakedupcreations.com/hot-out-the-oven-records/" target="_blank" rel="noopener">Visit the label</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT & CONTACT ============ -->
+<section class="page" id="page-about">
+  <div class="wrap" style="max-width:900px">
+    <h2 class="sec" style="margin-bottom:24px">About <span style="color:var(--pink)">Baked Up</span></h2>
+    <div style="border-radius:18px;overflow:hidden;aspect-ratio:5/2;margin-bottom:28px;background:var(--card)">
+      <img src="https://bakedupcreations.com/wp-content/uploads/2018/07/img_51741.jpg?w=944" alt="The Baked Up crew" style="width:100%;height:100%;object-fit:cover">
+    </div>
+    <div class="prose">
+      <p>Baked Up, LLC was established in early 2018 in Austin, Texas. We focus on bringing people together to enjoy good times with new and old friends. Treating everyone with kindness and working together are two principles we truly take to heart.</p>
+      <p>We strive to always do the right thing, be good to people, help each other out, and ensure people from all walks of life feel welcomed — and most of all, to have a crazy amount of fun with one another. We share our creativity by throwing events and livestreams, and by offering products inspired by our surroundings and the amazing people we've met along the way.</p>
+      <p style="color:var(--pink);font-weight:600">However you choose to enjoy Baked Up, our Sugaa Squaad can't wait to make memories with you, your friends and your family that you'll want to relive.</p>
+    </div>
+
+    <h3 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin:56px 0 10px">Get <span style="color:var(--purple)">Involved</span></h3>
+    <p class="lede">There's a spot on the Squaad for everybody. Pick your lane:</p>
+    <div class="grid lanes">
+      <div class="lane"><h4 style="font-size:17px;margin-bottom:8px">Street Team</h4><p class="muted" style="margin:0;font-size:15px">Hand out flyers, rep the brand, get on guest lists.</p></div>
+      <div class="lane"><h4 style="font-size:17px;margin-bottom:8px">Event Crew</h4><p class="muted" style="margin:0;font-size:15px">Set-up, door, hospitality and vibe-keeping at our shows.</p></div>
+      <div class="lane"><h4 style="font-size:17px;margin-bottom:8px">Creatives</h4><p class="muted" style="margin:0;font-size:15px">Photo, video, design and visuals — show us your work.</p></div>
+    </div>
+
+    <h3 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin:56px 0 10px">Apply To <span style="color:var(--pink)">DJ</span></h3>
+    <p class="lede">Want to play a Baked Up show? Send us the goods and we'll listen to every one.</p>
+    <!-- TODO: replace action with your Formspree endpoint (see README) -->
+    <form class="dj" id="dj-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="two">
+        <label>Artist name<input type="text" name="artist" placeholder="DJ Sugaa" required></label>
+        <label>Email<input type="email" name="email" placeholder="you@email.com" required></label>
+        <label>City<input type="text" name="city" placeholder="Austin, TX"></label>
+        <label>Genre<input type="text" name="genre" placeholder="Bass / house / hip-hop"></label>
+      </div>
+      <label>Mix / SoundCloud link<input type="url" name="mix" placeholder="https://soundcloud.com/..."></label>
+      <label>Tell us about you<textarea name="about" rows="4" placeholder="Sets you've played, who you've opened for, what you bring to a room."></textarea></label>
+      <button class="btn" type="submit" style="justify-self:start">Send application</button>
+    </form>
+
+    <h3 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin:56px 0 10px">Contact &amp; <span style="color:var(--pink)">Booking</span></h3>
+    <div class="booking">
+      <p class="muted" style="margin:0 0 24px;font-size:16px">Want a Baked Up artist at your show, or a treat thrown in your city?</p>
+      <a class="btn" href="mailto:artistmgmt@bakedupcreations.com">artistmgmt@bakedupcreations.com</a>
+      <div class="socials">
+        <a href="https://www.instagram.com/bakedupcreations/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/bakedupcreations/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://linktr.ee/bakedupcreations" target="_blank" rel="noopener">Linktree</a>
+      </div>
+    </div>
+
+    <div class="admin-entry"><a href="#" id="admin-toggle">Squaad Admin</a></div>
+    <div class="admin" id="admin">
+      <div class="admin-note">
+        <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px">Events &amp; photos come from WordPress</div>
+        <p class="muted" style="margin:0;font-size:14px;line-height:1.6">Post it in WordPress and it appears here on its own — no deploy, no code. This panel is only here if something looks stuck.</p>
+      </div>
+      <div class="admin-actions">
+        <button id="btn-refresh"><div class="t">Refresh now</div><div class="muted" style="font-size:13px">Re-read events &amp; photos from WordPress immediately.</div></button>
+        <button id="btn-cache"><div class="t">Clear cache</div><div class="muted" style="font-size:13px">Use if an old flyer or photo is still showing.</div></button>
+      </div>
+      <div style="margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <span class="pill" id="admin-pill">Idle · all synced</span>
+        <span class="dim" style="font-size:13px">Last checked WordPress: <span id="admin-last">—</span></span>
+      </div>
+      <div class="log" id="admin-log"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="row">
+    <a href="https://www.instagram.com/bakedupcreations/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/bakedupcreations/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://bakedupcreations.com/shop/" target="_blank" rel="noopener">Shop Merch</a>
+    <a href="https://bakedupcreations.com/hot-out-the-oven-records/" target="_blank" rel="noopener">Hot Out The Oven Records</a>
+    <a href="https://linktr.ee/bakedupcreations" target="_blank" rel="noopener">Linktree</a>
+  </div>
+  <p class="dim" style="font-size:13px;margin:24px 0 0">© 2026 Baked Up, LLC · Austin, TX · Turning friends into family.</p>
+</footer>
+
+<script>
+/* =========================================================================
+   BAKED UP — front end
+   Content comes from WordPress. Nobody edits this file to add an event.
+   Everything you might want to change lives in CONFIG below.
+   ========================================================================= */
+const CONFIG = {
+  // WordPress.com site domain (works on any plan, read-only, no key needed)
+  wpSite: 'bakedupcreations.com',
+  // Posts with this tag OR category show up as events
+  eventTag: 'event',
+  // Posts with this tag are treated as past/archived events
+  pastTag: 'past-event',
+  // How long to trust cached WordPress data (minutes)
+  cacheMinutes: 5,
+  // YouTube links for the Media page (paste full watch URLs)
+  videos: ['', '', '', ''],
+  // Shown if WordPress is unreachable, so the site is never empty
+  fallbackEvents: [
+    { title:'Freaky Deaky', dateISO:'2026-10-30', endISO:'2026-10-31', venue:'Travis County Expo Center · Austin, TX',
+      ticketUrl:'https://freakydeaky.com/', image:'https://bakedupcreations.com/wp-content/uploads/2026/06/unnamed-24.png?w=500' },
+    { title:'Weird Wubz', dateISO:'2026-08-19', venue:'Vulcan Gas Company, Austin',
+      image:'https://bakedupcreations.com/wp-content/uploads/2026/08/wobble-wednesday-upcoming-show-date-1-1.jpg?w=840' }
+  ],
+  fallbackPast: [
+    { title:'Wobble Wednesday: 8 Year Anniversary ft. Spoone, Dessigner Toys', dateISO:'2026-07-29', venue:'Vulcan Gas Company, Austin' },
+    { title:'Abelfest', dateISO:'2026-07-18', venue:'Austin, TX' },
+    { title:'Road to Sound Camp ft. Dirt Monkey, Hydraulix', dateISO:'2026-07-02', venue:'Kingdom, Austin' },
+    { title:'Wobble Wednesday: Road to Abelfest', dateISO:'2026-06-17', venue:'Vulcan Gas Company, Austin' },
+    { title:'Baked Up Edition ft. Flava D', dateISO:'2019-02-07', venue:'Vulcan Gas Company, Austin' }
+  ],
+  fallbackPhotos: [
+    'https://bakedupcreations.com/wp-content/uploads/2018/07/cropped-img_8039.jpg',
+    'https://bakedupcreations.com/wp-content/uploads/2018/07/img_51741.jpg?w=944',
+    'https://bakedupcreations.com/wp-content/uploads/2026/08/wobble-wednesday-upcoming-show-date-1-1.jpg?w=840',
+    'https://bakedupcreations.com/wp-content/uploads/2026/06/unnamed-24.png?w=500',
+    'https://bakedupcreations.com/wp-content/uploads/2025/06/ogk-website-1.png?w=840',
+    'https://bakedupcreations.com/wp-content/uploads/2020/08/saratonin-website.png?w=840'
+  ]
+};
+
+const API = 'https://public-api.wordpress.com/wp/v2/sites/' + CONFIG.wpSite;
+const CACHE_KEY = 'bakedup.wp.cache.v1';
+const $ = (s, r) => (r || document).querySelector(s);
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const stripTags = (s) => String(s || '').replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
+
+let state = { events: [], past: [], photos: [], calY: null, calM: null, archiveYear: 'all' };
+
+/* ---------- WordPress ---------- */
+async function fetchJSON(url) {
+  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error('WordPress returned ' + res.status);
+  return res.json();
+}
+
+/* Reads the date + venue + ticket link out of a WordPress post.
+   Recommended posting format (see WORDPRESS-GUIDE.md):
+     Title:  Freaky Deaky
+     Body:   Date: 2026-10-30
+             Venue: Travis County Expo Center, Austin
+             Tickets: https://freakydeaky.com/
+   Anything missing falls back to the post's own publish date. */
+function parsePost(p) {
+  const body = stripTags(p.content && p.content.rendered);
+  const field = (name) => {
+    const m = body.match(new RegExp(name + '\\s*:\\s*([^\\n]+)', 'i'));
+    return m ? m[1].trim() : '';
+  };
+  const rawDate = field('date') || field('when');
+  const parsed = rawDate ? new Date(rawDate) : new Date(p.date);
+  const endRaw = field('end') || field('through');
+  const img = (p._embedded && p._embedded['wp:featuredmedia'] && p._embedded['wp:featuredmedia'][0] &&
+               p._embedded['wp:featuredmedia'][0].source_url) || '';
+  return {
+    id: p.id,
+    title: stripTags(p.title && p.title.rendered) || 'Untitled show',
+    dateISO: isNaN(parsed) ? p.date.slice(0, 10) : parsed.toISOString().slice(0, 10),
+    endISO: endRaw && !isNaN(new Date(endRaw)) ? new Date(endRaw).toISOString().slice(0, 10) : '',
+    venue: field('venue') || field('where') || '',
+    ticketUrl: field('tickets') || field('ticket') || '',
+    image: img,
+    link: p.link
+  };
+}
+
+async function loadFromWordPress() {
+  const [tags, posts] = await Promise.all([
+    fetchJSON(API + '/tags?per_page=100').catch(() => []),
+    fetchJSON(API + '/posts?per_page=50&_embed=wp:featuredmedia').catch(() => [])
+  ]);
+  const tagId = (slug) => (tags.find(t => t.slug === slug) || {}).id;
+  const evId = tagId(CONFIG.eventTag), pastId = tagId(CONFIG.pastTag);
+
+  const all = posts.map(parsePost);
+  const tagged = (p, id) => id && posts.find(x => x.id === p.id && (x.tags || []).includes(id));
+  const today = new Date().toISOString().slice(0, 10);
+
+  let events = all.filter(p => tagged(p, evId) && (p.endISO || p.dateISO) >= today);
+  let past   = all.filter(p => tagged(p, pastId) || ((p.endISO || p.dateISO) < today && tagged(p, evId)));
+
+  // If nothing is tagged yet, fall back to date logic across all posts with a date line.
+  if (!events.length && !past.length) {
+    events = all.filter(p => (p.endISO || p.dateISO) >= today);
+    past   = all.filter(p => (p.endISO || p.dateISO) < today);
+  }
+
+  const media = await fetchJSON(API + '/media?per_page=30&media_type=image').catch(() => []);
+  const photos = media.map(m => m.source_url).filter(Boolean);
+
+  return {
+    events: events.sort((a, b) => a.dateISO.localeCompare(b.dateISO)),
+    past: past.sort((a, b) => b.dateISO.localeCompare(a.dateISO)),
+    photos
+  };
+}
+
+function readCache() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+    if (!raw) return null;
+    if (Date.now() - raw.at > CONFIG.cacheMinutes * 60000) return null;
+    return raw.data;
+  } catch (e) { return null; }
+}
+function writeCache(data) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data })); } catch (e) {}
+}
+
+async function load(force) {
+  const cached = force ? null : readCache();
+  if (cached) { apply(cached); log('[cache] showing saved copy of WordPress data'); return; }
+  try {
+    const live = await loadFromWordPress();
+    // Fall back per-section, so photos still load before events are tagged (and vice versa).
+    const data = {
+      events: live.events.length ? live.events : CONFIG.fallbackEvents,
+      past: live.past.length ? live.past : CONFIG.fallbackPast,
+      photos: live.photos.length ? live.photos : CONFIG.fallbackPhotos
+    };
+    writeCache(data);
+    apply(data);
+    log('[wordpress] events: ' + (live.events.length ? live.events.length + ' live' : 'none tagged yet, using built-in list') +
+        ' · past: ' + (live.past.length ? live.past.length + ' live' : 'built-in list') +
+        ' · photos: ' + (live.photos.length ? live.photos.length + ' from media library' : 'built-in list'));
+  } catch (err) {
+    apply({ events: CONFIG.fallbackEvents, past: CONFIG.fallbackPast, photos: CONFIG.fallbackPhotos });
+    log('[wordpress] could not reach WordPress (' + err.message + ') — showing built-in list');
+  }
+  $('#admin-last').textContent = new Date().toLocaleString();
+}
+
+/* ---------- rendering ---------- */
+function fmtDate(iso, endISO) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T12:00:00');
+  const one = MONTHS[d.getMonth()].slice(0, 3).toUpperCase() + ' ' + d.getDate();
+  if (endISO) {
+    const e = new Date(endISO + 'T12:00:00');
+    return one + '–' + (e.getMonth() === d.getMonth() ? e.getDate() : MONTHS[e.getMonth()].slice(0,3).toUpperCase() + ' ' + e.getDate());
+  }
+  return one;
+}
+function longDate(iso, endISO) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T12:00:00');
+  const base = MONTHS[d.getMonth()] + ' ' + d.getDate();
+  if (endISO) {
+    const e = new Date(endISO + 'T12:00:00');
+    return base + ' – ' + (e.getMonth() === d.getMonth() ? e.getDate() : MONTHS[e.getMonth()] + ' ' + e.getDate()) + ', ' + d.getFullYear();
+  }
+  return base + ', ' + d.getFullYear();
+}
+function eventCard(ev, dimmed) {
+  const c = el('article', 'card');
+  c.innerHTML =
+    '<div class="sq">' + (ev.image ? '<img src="' + esc(ev.image) + '" alt="' + esc(ev.title) + ' flyer" loading="lazy">' : '') + '</div>' +
+    '<div class="body">' +
+      '<div class="date">' + esc(fmtDate(ev.dateISO, ev.endISO)) + (dimmed ? ' · ' + ev.dateISO.slice(0, 4) : '') + '</div>' +
+      '<h3 style="font-size:' + (dimmed ? '16px' : '20px') + ';margin-bottom:4px;line-height:1.25">' + esc(ev.title) + '</h3>' +
+      '<p class="muted" style="margin:0;font-size:' + (dimmed ? '13px' : '14px') + '">' + esc(ev.venue) + '</p>' +
+      (ev.ticketUrl && !dimmed ? '<p style="margin:8px 0 0;font-size:14px"><a href="' + esc(ev.ticketUrl) + '" target="_blank" rel="noopener">Tickets</a></p>' : '') +
+    '</div>';
+  return c;
+}
+
+function apply(data) {
+  state.events = data.events || [];
+  state.past = data.past || [];
+  state.photos = (data.photos && data.photos.length ? data.photos : CONFIG.fallbackPhotos) || [];
+  renderHome(); renderEvents(); renderCalendar(); renderArchive(); renderMedia();
+}
+
+function renderHome() {
+  const next = state.events[0];
+  if (next) {
+    $('#hero-title').textContent = next.title;
+    $('#hero-date').textContent = longDate(next.dateISO, next.endISO);
+    $('#hero-venue').textContent = next.venue || 'Austin, TX';
+    if (next.image) $('#hero-flyer').src = next.image;
+    const t = $('#hero-tickets');
+    if (next.ticketUrl) { t.href = next.ticketUrl; t.style.display = ''; } else { t.style.display = 'none'; }
+  }
+  $('#ticker').innerHTML = (() => {
+    const bits = state.events.map((e, i) =>
+      ['🍪','🧁','🍩'][i % 3] + ' ' + esc(e.title) + ' · ' + esc(fmtDate(e.dateISO, e.endISO)) + (e.venue ? ' · ' + esc(e.venue) : ''));
+    if (!bits.length) bits.push('🧁 New dates dropping soon');
+    const run = bits.join(' &nbsp;&nbsp;•&nbsp;&nbsp; ') + ' &nbsp;&nbsp;•&nbsp;&nbsp; ';
+    return run + run;
+  })();
+
+  const more = $('#home-more'); more.innerHTML = '';
+  state.events.slice(1, 2).forEach(ev => more.appendChild(eventCard(ev)));
+  const teaser = el('article', 'card');
+  teaser.style.cssText = 'border:1px dashed rgba(255,95,162,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 24px;min-height:240px';
+  teaser.innerHTML = '<div style="font-size:38px;animation:pulseGlow 2.6s ease-in-out infinite">🧁</div>' +
+    '<h3 style="font-size:18px;margin:14px 0 6px">Something\'s in the oven</h3>' +
+    '<p class="muted" style="margin:0;font-size:14px">New dates dropping soon — watch the calendar.</p>' +
+    '<a href="#events" style="margin-top:18px;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase">Full calendar →</a>';
+  more.appendChild(teaser);
+  const slog = el('article', 'card');
+  slog.style.cssText = 'background:linear-gradient(135deg,rgba(255,95,162,.18),rgba(122,60,255,.18));border-color:rgba(255,95,162,.4);padding:32px 26px;display:flex;flex-direction:column;justify-content:center;min-height:240px';
+  slog.innerHTML = '<h3 style="font-size:20px;margin-bottom:10px;line-height:1.15">Turning friends into family</h3>' +
+    '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">Throwing events in Austin since 2018. Pull up solo — you won\'t leave that way.</p>';
+  more.appendChild(slog);
+}
+
+function renderEvents() {
+  const g = $('#events-grid'); g.innerHTML = '';
+  if (!state.events.length) {
+    g.appendChild(el('p', 'dim', 'No shows on the books right now — check back soon.'));
+    return;
+  }
+  state.events.forEach(ev => g.appendChild(eventCard(ev)));
+}
+
+function renderCalendar() {
+  if (state.calY == null) {
+    const first = state.events[0];
+    const d = first ? new Date(first.dateISO + 'T12:00:00') : new Date();
+    state.calY = d.getFullYear(); state.calM = d.getMonth();
+  }
+  const y = state.calY, m = state.calM;
+  $('#cal-label').textContent = MONTHS[m] + ' ' + y;
+  const daysIn = new Date(y, m + 1, 0).getDate();
+  const startDow = new Date(y, m, 1).getDay();
+  const cells = Math.ceil((startDow + daysIn) / 7) * 7;
+  const inRange = (ev, day) => {
+    const iso = [y, String(m + 1).padStart(2, '0'), String(day).padStart(2, '0')].join('-');
+    return iso >= ev.dateISO && iso <= (ev.endISO || ev.dateISO);
+  };
+  const box = $('#cal-days'); box.innerHTML = '';
+  for (let i = 0; i < cells; i++) {
+    const day = i - startDow + 1;
+    const has = day >= 1 && day <= daysIn ? state.events.find(ev => inRange(ev, day)) : null;
+    const cell = el('div', 'day' + (day >= 1 && day <= daysIn ? '' : ' out') + (has ? ' has' : ''));
+    if (day >= 1 && day <= daysIn) {
+      cell.appendChild(el('div', 'n', String(day)));
+      if (has) { const t = el('div', 'ev', esc(has.title)); t.title = has.title + (has.venue ? ' — ' + has.venue : ''); cell.appendChild(t); }
+    }
+    box.appendChild(cell);
+  }
+  const list = $('#cal-list'); list.innerHTML = '';
+  const monthEvents = state.events.filter(ev => {
+    const d = new Date(ev.dateISO + 'T12:00:00');
+    return d.getFullYear() === y && d.getMonth() === m;
+  });
+  if (!monthEvents.length) {
+    const none = el('div', 'dim', 'No shows this month — check the next one.');
+    none.style.cssText = 'font-size:14px;text-align:center;padding:8px';
+    list.appendChild(none);
+  } else monthEvents.forEach(ev => {
+    list.appendChild(el('div', 'row',
+      '<b>' + esc(fmtDate(ev.dateISO, ev.endISO)) + '</b><span style="font-weight:700">' + esc(ev.title) + '</span>' +
+      '<span class="muted" style="font-size:14px">' + esc(ev.venue) + '</span>'));
+  });
+}
+
+function renderArchive() {
+  const years = Array.from(new Set(state.past.map(p => p.dateISO.slice(0, 4)))).sort().reverse();
+  const chips = $('#archive-chips'); chips.innerHTML = '';
+  [['all', 'ALL']].concat(years.map(y => [y, y])).forEach(([val, label]) => {
+    const b = el('button', 'chip' + (state.archiveYear === val ? ' active' : ''), label);
+    b.onclick = () => { state.archiveYear = val; renderArchive(); };
+    chips.appendChild(b);
+  });
+  const g = $('#archive-grid'); g.innerHTML = '';
+  const shown = state.past.filter(p => state.archiveYear === 'all' || p.dateISO.slice(0, 4) === state.archiveYear);
+  if (!shown.length) g.appendChild(el('p', 'dim', 'Nothing archived yet.'));
+  shown.forEach(p => g.appendChild(eventCard(p, true)));
+}
+
+function renderMedia() {
+  const photos = state.photos.slice(0, 12);
+  const car = $('#carousel'); car.innerHTML = '';
+  const strip = photos.length ? photos : CONFIG.fallbackPhotos;
+  strip.concat(strip).forEach((src, i) => {
+    const d = el('div');
+    d.innerHTML = '<img src="' + esc(src) + '" alt="Baked Up photo" loading="lazy">';
+    if (i >= strip.length) d.setAttribute('aria-hidden', 'true');
+    car.appendChild(d);
+  });
+  const gal = $('#gallery'); gal.innerHTML = '';
+  (photos.length ? photos : CONFIG.fallbackPhotos).slice(0, 6).forEach(src => {
+    gal.appendChild(el('figure', '', '<img src="' + esc(src) + '" alt="Baked Up photo" loading="lazy">'));
+  });
+  const vids = $('#videos'); vids.innerHTML = '';
+  const labels = ['recap video', 'livestream / set', 'aftermovie', 'artist set'];
+  CONFIG.videos.forEach((url, i) => {
+    const m = String(url || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+    const box = el('div');
+    box.innerHTML = m
+      ? '<iframe src="https://www.youtube.com/embed/' + m[1] + '" title="' + labels[i] + '" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>'
+      : '<div class="vempty"><div class="ring">▶</div><div class="mono">' + labels[i] + ' — add link in config.videos</div></div>';
+    vids.appendChild(box);
+  });
+}
+
+/* ---------- carousel: auto-scroll, pause on hover, drag, infinite ---------- */
+(function carousel() {
+  const car = $('#carousel');
+  let pos = null, paused = false, drag = null;
+  const tick = () => {
+    const half = car.scrollWidth / 2;
+    if (paused || drag || pos === null) pos = car.scrollLeft;
+    else {
+      pos += 0.6;
+      if (half > 0) { if (pos >= half) pos -= half; else if (pos < 0) pos += half; }
+      car.scrollLeft = pos;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  car.addEventListener('mouseenter', () => paused = true);
+  car.addEventListener('mouseleave', () => { paused = false; drag = null; });
+  car.addEventListener('pointerdown', e => drag = { x: e.clientX, sl: car.scrollLeft, moved: false });
+  car.addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (Math.abs(dx) > 4) drag.moved = true;
+    if (drag.moved) car.scrollLeft = drag.sl - dx;
+  });
+  ['pointerup', 'pointercancel'].forEach(ev => car.addEventListener(ev, () => { drag = null; pos = null; }));
+  $('#car-prev').onclick = () => { car.scrollBy({ left: -336, behavior: 'smooth' }); pos = null; };
+  $('#car-next').onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
+})();
+
+/* ---------- routing ---------- */
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + page));
+  document.querySelectorAll('#menu a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function routeFromHash() {
+  const page = (location.hash || '#home').slice(1);
+  show(['home','events','media','roster','about'].includes(page) ? page : 'home');
+}
+window.addEventListener('hashchange', routeFromHash);
+
+/* ---------- calendar nav ---------- */
+$('#cal-prev').onclick = () => { if (state.calM === 0) { state.calM = 11; state.calY--; } else state.calM--; renderCalendar(); };
+$('#cal-next').onclick = () => { if (state.calM === 11) { state.calM = 0; state.calY++; } else state.calM++; renderCalendar(); };
+
+/* ---------- admin panel ---------- */
+function log(line) {
+  const box = $('#admin-log');
+  box.appendChild(el('div', '', esc(line)));
+  box.scrollTop = box.scrollHeight;
+}
+$('#admin-toggle').onclick = (e) => { e.preventDefault(); $('#admin').classList.toggle('open'); };
+$('#btn-refresh').onclick = async () => {
+  const pill = $('#admin-pill'); pill.textContent = 'Working…'; pill.classList.add('busy');
+  log('[refresh] reading WordPress…');
+  await load(true);
+  pill.textContent = 'Idle · all synced'; pill.classList.remove('busy');
+};
+$('#btn-cache').onclick = async () => {
+  localStorage.removeItem(CACHE_KEY);
+  log('[cache] cleared saved copy');
+  await load(true);
+};
+
+/* ---------- go ---------- */
+routeFromHash();
+load(false);
+setInterval(() => load(false), CONFIG.cacheMinutes * 60000);
+</script>
+</body>
+</html>
