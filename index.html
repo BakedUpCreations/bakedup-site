@@ -10,7 +10,7 @@
 <link rel="icon" href="https://bakedupcreations.com/wp-content/uploads/2018/07/cropped-12133-tongue-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0e0a14; --card:#171022; --ink:#f5f0f7; --pink:#ff5fa2; --pink-soft:#ffd7e8;
@@ -64,7 +64,11 @@
   .nav-brand img{height:96px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
   .nav-top .menu-rows{flex:1 1 auto;margin-top:0}
   .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
-  .slogan-bottom{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;pointer-events:none;white-space:nowrap;text-align:center;padding:10px 26px;border-radius:999px;background:rgba(14,10,20,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,95,162,.3);box-shadow:0 0 26px rgba(255,95,162,.22)}
+  @keyframes sloganBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+  .slogan-bottom{position:fixed;left:50%;bottom:42px;transform:translateX(-50%);z-index:5;pointer-events:none;white-space:nowrap;text-align:center;
+    font-family:'Pacifico',cursive;font-size:clamp(19px,2.4vw,30px);font-weight:400;letter-spacing:.01em;text-transform:none;color:#fffdfa;
+    text-shadow:0 -1px 0 rgba(255,255,255,.95),0 1px 0 rgba(255,214,236,.9),0 2px 1px rgba(206,150,180,.75),0 3px 3px rgba(120,60,110,.5),0 6px 10px rgba(0,0,0,.45);
+    filter:drop-shadow(0 12px 14px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(255,95,162,.5));animation:sloganBob 5s ease-in-out infinite}
   @media(max-width:520px){ .slogan-bottom{display:none} }
   .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);row-gap:clamp(4px,1.3vw,14px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
