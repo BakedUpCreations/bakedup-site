@@ -468,10 +468,19 @@
         </div>
       </article>
     </div>
-    <div class="label-cta">
-      <h3 style="font-size:20px;margin-bottom:10px">Hot Out The Oven Records</h3>
-      <p class="muted" style="margin:0 0 20px">Our in-house label — releases, remixes and fresh heat.</p>
-      <a class="btn-ghost" href="#hoto">See the releases →</a>
+    <!-- BOOKING FORM PLACEHOLDER.
+         Two ways to make this live, pick either one:
+         1. Easiest: paste the form link into CONFIG.bookingUrl (search for "bookingUrl" below).
+            The "coming soon" pill turns into a working button automatically.
+         2. Embedded form: replace the <div id="book-artist-cta"></div> line with the embed
+            code (Google Form / Formspree / Jotform iframe) from whichever form tool you use. -->
+    <div class="submit-box" id="book-artist">
+      <div>
+        <div class="badge">Bookings</div>
+        <h3 style="font-size:clamp(20px,2.6vw,28px);font-weight:900;margin:14px 0 8px">Book an artist</h3>
+        <p class="muted" style="margin:0;max-width:60ch;line-height:1.6">Want a Baked Up artist at your event? Tell us the date, the city and the kind of night you're throwing — we'll take it from there.</p>
+      </div>
+      <div id="book-artist-cta"></div>
     </div>
   </div>
 </section>
@@ -574,6 +583,9 @@ const CONFIG = {
   cacheMinutes: 5,
   // YouTube links for the Media page (paste full watch URLs)
   videos: ['', '', '', ''],
+  // Booking web form for the Artist Roster page — paste the link here and the
+  // "coming soon" pill becomes a working "Start a booking request" button.
+  bookingUrl: '',
   // ---- Series pages (Weird Wubz, ABELFEST …) ----
   // Each entry becomes a tab with the same layout: upcoming shows, playlist + featured artist,
   // past archive, 5-picture strip. Everything can ALSO be set from WordPress (see WORDPRESS-GUIDE.md);
@@ -1367,6 +1379,16 @@ function makeCarousel(carSel, prevSel, nextSel) {
 makeCarousel('#carousel', '#car-prev', '#car-next');
 makeCarousel('#home-carousel', '#home-car-prev', '#home-car-next');
 CONFIG.series.forEach(sr => makeCarousel('#' + sr.id + '-carousel', '#' + sr.id + '-prev', '#' + sr.id + '-next'));
+
+/* ---------- book an artist (Artist Roster page) ---------- */
+function renderBooking() {
+  const cta = $('#book-artist-cta');
+  if (!cta) return;
+  cta.innerHTML = CONFIG.bookingUrl
+    ? '<a class="btn" href="' + esc(CONFIG.bookingUrl) + '" target="_blank" rel="noopener">Start a booking request</a>'
+    : '<span class="soon">Booking form coming soon</span>';
+}
+renderBooking();
 
 /* ---------- lightbox (photo album) ---------- */
 let lbPhotos = [], lbIndex = 0, lbName = '';
