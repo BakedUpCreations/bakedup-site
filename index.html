@@ -340,6 +340,13 @@
     <p class="lede">More treats on the tray.</p>
     <div class="grid cards" id="home-more"></div>
   </div>
+
+  <div class="wrap" style="padding-top:0;margin-top:56px">
+    <h2 class="sec">Straight From The <span style="color:var(--pink)">Oven</span></h2>
+    <p class="lede">Moments from the last few bakes.</p>
+    <div class="carousel" id="home-carousel"></div>
+    <div class="car-nav"><button id="home-car-prev" aria-label="Scroll left">‹</button><button id="home-car-next" aria-label="Scroll right">›</button></div>
+  </div>
 </section>
 
 <!-- ============ EVENTS ============ -->
@@ -1018,6 +1025,19 @@ function renderHome() {
   slog.innerHTML = '<h3 style="font-size:20px;margin-bottom:10px;line-height:1.15">Turning friends into family</h3>' +
     '<p class="muted" style="margin:0;font-size:15px;line-height:1.6">Throwing events in Austin since 2018. Pull up solo — you won\'t leave that way.</p>';
   more.appendChild(slog);
+
+  // Bottom-of-page picture carousel: WordPress media first, topped up with album photos
+  const album = (CONFIG.series.find(s => s.album && s.album.length) || {}).album || [];
+  let strip = state.photos.slice(0, 12);
+  if (strip.length < 12) strip = strip.concat(album.map(p => p.t)).slice(0, 12);
+  if (!strip.length) strip = CONFIG.fallbackPhotos.slice(0, 12);
+  const hcar = $('#home-carousel'); hcar.innerHTML = '';
+  strip.concat(strip).forEach((src, i) => {
+    const d = el('div');
+    d.innerHTML = '<img src="' + esc(src) + '" alt="Baked Up photo" loading="lazy">';
+    if (i >= strip.length) d.setAttribute('aria-hidden', 'true');
+    hcar.appendChild(d);
+  });
 }
 
 function renderEvents() {
@@ -1345,6 +1365,7 @@ function makeCarousel(carSel, prevSel, nextSel) {
   $(nextSel).onclick = () => { car.scrollBy({ left: 336, behavior: 'smooth' }); pos = null; };
 }
 makeCarousel('#carousel', '#car-prev', '#car-next');
+makeCarousel('#home-carousel', '#home-car-prev', '#home-car-next');
 CONFIG.series.forEach(sr => makeCarousel('#' + sr.id + '-carousel', '#' + sr.id + '-prev', '#' + sr.id + '-next'));
 
 /* ---------- lightbox (photo album) ---------- */
