@@ -220,6 +220,7 @@
   .lightbox .lb-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--pink-soft);letter-spacing:.05em}
   @media(max-width:640px){.lightbox{padding:20px}.lightbox .lb-prev{left:6px;width:38px;height:38px}.lightbox .lb-next{right:6px;width:38px;height:38px}.lightbox .lb-close{top:6px;right:6px;width:38px;height:38px}}
   .carousel iframe{width:100%;height:100%;border:0;background:#fff}
+  .carousel > div.pic-placeholder{background:linear-gradient(135deg,rgba(var(--pink-rgb),.10),rgba(122,60,255,.12));border-style:dashed;border-color:rgba(var(--pink-rgb),.28)}
   .listen{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
   .listen-card{display:flex;flex-direction:column}
   .listen-card .body{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
@@ -1261,20 +1262,20 @@ function buildSeriesPages() {
     sec.id = 'page-' + sr.id;
     sec.innerHTML =
       '<div class="wrap">' +
-        '<h2 class="sec">' + sr.titleHtml + '</h2>' +
+        '<div class="ig-strip">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px">' +
+            '<h2 class="sec" style="margin:0">On the <span style="color:var(--pink)">\'Gram</span></h2>' +
+            '<a class="btn-ghost" id="' + sr.id + '-ig" href="' + esc(sr.instagram) + '" target="_blank" rel="noopener">Follow ' + esc(sr.igHandle) + ' →</a></div>' +
+          '<p class="lede" id="' + sr.id + '-ig-lede">Latest pictures.</p>' +
+          '<div class="carousel" id="' + sr.id + '-carousel"></div>' +
+          '<div class="car-nav"><button id="' + sr.id + '-prev" aria-label="Scroll left">‹</button><button id="' + sr.id + '-next" aria-label="Scroll right">›</button></div>' +
+        '</div>' +
+        '<h2 class="sec" style="margin-top:64px">' + sr.titleHtml + '</h2>' +
         '<p class="lede">' + esc(sr.lede) + '</p>' +
         '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px" id="' + sr.id + '-grid"></div>' +
         '<div class="listen"><article class="card listen-card" id="' + sr.id + '-playlist"></article><article class="card listen-card" id="' + sr.id + '-featured"></article></div>' +
         '<div style="margin-top:64px"><h2 class="sec">' + sr.pastTitleHtml + '</h2><p class="lede">' + esc(sr.pastLede) + '</p>' +
           '<div class="chips" id="' + sr.id + '-chips"></div><div class="grid archive" id="' + sr.id + '-archive"></div></div>' +
-        '<div style="margin-top:64px">' +
-          '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px">' +
-            '<h2 class="sec" style="margin:0">On the <span style="color:var(--pink)">\'Gram</span></h2>' +
-            '<a class="btn-ghost" id="' + sr.id + '-ig" href="' + esc(sr.instagram) + '" target="_blank" rel="noopener">Follow ' + esc(sr.igHandle) + ' →</a></div>' +
-          '<p class="lede">Latest pictures.</p>' +
-          '<div class="carousel" id="' + sr.id + '-carousel"></div>' +
-          '<div class="car-nav"><button id="' + sr.id + '-prev" aria-label="Scroll left">‹</button><button id="' + sr.id + '-next" aria-label="Scroll right">›</button></div>' +
-        '</div>' +
         '<div style="margin-top:64px;display:none" id="' + sr.id + '-album-wrap">' +
           '<h2 class="sec">The <span style="color:var(--pink)">Album</span></h2>' +
           '<p class="lede" id="' + sr.id + '-album-lede"></p>' +
@@ -1345,13 +1346,21 @@ function renderSeries(sr) {
 
   // Picture strip — config list first, then matching WordPress media, then the show flyers.
   $('#' + id + '-ig').href = sr.instagram;
-  let pics = (sr.photos || []).filter(Boolean).slice(0, 5);
-  if (!pics.length) pics = (S.photos || []).slice(0, 5);
-  if (!pics.length) pics = up.concat(past).map(e => e.image).filter(Boolean).slice(0, 5);
+  // Up to 10 pictures. They come from the WordPress media library automatically:
+  // any image whose title/caption/alt matches this series' photoWords (see CONFIG) lands here.
+  const MAX_PICS = 10;
+  let pics = (sr.photos || []).filter(Boolean).slice(0, MAX_PICS);
+  if (!pics.length) pics = (S.photos || []).slice(0, MAX_PICS);
   const car = $('#' + id + '-carousel'); car.innerHTML = '';
+  const igLede = $('#' + id + '-ig-lede');
   if (!pics.length) {
-    car.appendChild(el('div', '', '<div class="vempty"><div class="ring">📸</div><div class="mono">add 5 pictures — see WORDPRESS-GUIDE.md</div></div>'));
+    // Placeholder tiles until pictures are uploaded to WordPress.
+    if (igLede) igLede.textContent = 'Fresh pictures from ' + sr.igHandle + ' — coming soon.';
+    for (let i = 0; i < MAX_PICS; i++) {
+      car.appendChild(el('div', 'pic-placeholder', '<div class="vempty"><div class="ring">📸</div></div>'));
+    }
   } else {
+    if (igLede) igLede.textContent = 'Latest pictures.';
     pics.concat(pics).forEach((src, i) => {
       const d = el('div');
       const ig = String(src).match(/instagram\.com\/(?:p|reel)\/([\w-]+)/);
