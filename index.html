@@ -48,6 +48,9 @@
   .menu-rows{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}
   .menu-rows .menu{margin-top:0}
   .menu-row2{opacity:.92}
+  .menu a.menu-logo{padding:4px 10px}
+  .menu a.menu-logo img{height:30px;width:auto;display:block}
+  .menu a.menu-logo:hover,.menu a.menu-logo.active{background:rgba(255,95,162,.18)}
 
   .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
   .page{display:none}
@@ -232,8 +235,8 @@
         <a href="#about" data-page="about">About Us</a>
       </div>
       <div class="menu menu-row2">
-        <a href="#weirdwubz" data-page="weirdwubz">Weird Wubz</a>
-        <a href="#abelfest" data-page="abelfest">ABELFEST</a>
+        <a href="#weirdwubz" data-page="weirdwubz" class="menu-logo"><img src="images/weird-wubz-logo.png" alt="Weird Wubz"></a>
+        <a href="#abelfest" data-page="abelfest" class="menu-logo"><img src="images/abelfest-logo.png" alt="ABELFEST"></a>
       </div>
     </div>
   </div>
