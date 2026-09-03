@@ -63,12 +63,18 @@
   .nav-brand{flex:0 0 auto;line-height:0}
   .nav-brand img{height:96px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
   .nav-top .menu-rows{flex:1 1 auto;margin-top:0}
-  .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
-  .slogan-bottom{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:5;pointer-events:none;white-space:nowrap;text-align:center;
-    font-family:'Pacifico',cursive;font-size:clamp(19px,2.4vw,30px);font-weight:400;letter-spacing:.01em;text-transform:none;color:#fffdfa;
+  .slogan-icing{position:relative;display:inline-block;text-align:center;margin:0 0 26px;
+    font-family:'Pacifico',cursive;font-size:clamp(22px,3vw,34px);font-weight:400;letter-spacing:.01em;text-transform:none;color:#fffdfa;
     text-shadow:0 -1px 0 rgba(255,255,255,.95),0 1px 0 rgba(255,214,236,.9),0 2px 1px rgba(206,150,180,.75),0 3px 3px rgba(120,60,110,.5),0 6px 10px rgba(0,0,0,.45);
-    filter:drop-shadow(0 12px 14px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(255,95,162,.5))}
-  @media(max-width:520px){ .slogan-bottom{display:none} }
+    filter:drop-shadow(0 8px 12px rgba(0,0,0,.55)) drop-shadow(0 0 22px rgba(255,95,162,.5))}
+  .piping-bag{position:absolute;left:calc(100% - .62em);bottom:-.06em;width:1.45em;height:auto;transform:rotate(32deg);transform-origin:50% 90%;overflow:visible;filter:drop-shadow(0 3px 4px rgba(0,0,0,.45))}
+  .pb-bag{fill:#fff6fa}
+  .pb-twist{fill:var(--pink-soft)}
+  .pb-knot{fill:var(--pink)}
+  .pb-shine{fill:none;stroke:rgba(206,150,180,.5);stroke-width:3.5;stroke-linecap:round}
+  .pb-collar{fill:#9aa1b1}
+  .pb-tip{fill:#c9ced9}
+  .pb-tip-mouth{fill:#7d8494}
   .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);row-gap:clamp(4px,1.3vw,14px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
   .menu a:hover{background:var(--pink);color:var(--bg)}
@@ -303,8 +309,6 @@
 
 <div class="cupcake-corner left" aria-hidden="true"><svg viewBox="0 0 120 140"><use href="#cupcake-icon"/></svg></div>
 <div class="cupcake-corner right" aria-hidden="true"><svg viewBox="0 0 120 140"><use href="#cupcake-icon"/></svg></div>
-
-<p class="slogan slogan-bottom">Turning friends into family.</p>
 
 <nav class="site">
   <div class="nav-inner">
@@ -565,6 +569,15 @@
 </main>
 
 <footer>
+  <p class="slogan-icing">Turning friends into family.<svg class="piping-bag" viewBox="0 0 100 140" aria-hidden="true">
+    <path class="pb-bag" d="M26 32 C26 26 74 26 74 32 C74 58 60 84 57 100 L43 100 C40 84 26 58 26 32 Z"/>
+    <path class="pb-twist" d="M27 30 C27 17 73 17 73 30 C73 36 27 36 27 30 Z"/>
+    <path class="pb-knot" d="M40 22 C44 12 56 12 60 22 C55 17 45 17 40 22 Z"/>
+    <path class="pb-shine" d="M36 38 C35 58 41 78 46 94"/>
+    <rect class="pb-collar" x="40" y="99" width="20" height="9" rx="3"/>
+    <path class="pb-tip" d="M43 108 L57 108 L54 126 L46 126 Z"/>
+    <ellipse class="pb-tip-mouth" cx="50" cy="126" rx="4.2" ry="2"/>
+  </svg></p>
   <div class="row">
     <a href="https://www.instagram.com/bakedupcreations/" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.facebook.com/bakedupcreations/" target="_blank" rel="noopener">Facebook</a>
