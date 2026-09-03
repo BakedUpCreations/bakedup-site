@@ -144,6 +144,22 @@
   .gallery > figure{margin:0;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid rgba(122,60,255,.25)}
   .gallery > figure:first-child{grid-column:span 2;grid-row:span 2}
   .gallery img{width:100%;height:100%;object-fit:cover}
+
+  /* photo album + lightbox */
+  .album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:28px}
+  .album-thumb{padding:0;border:1px solid rgba(122,60,255,.25);border-radius:12px;overflow:hidden;background:var(--card);cursor:pointer;aspect-ratio:1;display:block;appearance:none}
+  .album-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
+  .album-thumb:hover img{transform:scale(1.07)}
+  .lightbox{position:fixed;inset:0;z-index:300;background:rgba(8,5,12,.95);display:none;align-items:center;justify-content:center;padding:60px 20px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:min(92vw,1100px);max-height:78vh;border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.6)}
+  .lightbox .lb-btn{position:absolute;background:rgba(23,16,34,.85);border:1px solid rgba(255,95,162,.4);color:var(--ink);width:44px;height:44px;border-radius:999px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+  .lightbox .lb-btn:hover{border-color:var(--pink);color:var(--pink)}
+  .lightbox .lb-close{top:20px;right:20px}
+  .lightbox .lb-prev{left:20px;top:50%;transform:translateY(-50%)}
+  .lightbox .lb-next{right:20px;top:50%;transform:translateY(-50%)}
+  .lightbox .lb-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--pink-soft);letter-spacing:.05em}
+  @media(max-width:640px){.lightbox{padding:20px}.lightbox .lb-prev{left:6px;width:38px;height:38px}.lightbox .lb-next{right:6px;width:38px;height:38px}.lightbox .lb-close{top:6px;right:6px;width:38px;height:38px}}
   .carousel iframe{width:100%;height:100%;border:0;background:#fff}
   .listen{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-top:56px}
   .listen-card{display:flex;flex-direction:column}
@@ -195,6 +211,11 @@
   /* about + forms */
   .prose p{font-size:17px;line-height:1.75;color:rgba(245,240,247,.82);margin:0 0 18px;text-wrap:pretty}
   .lanes{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .team{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;text-align:center}
+  .team-card .photo{width:112px;height:112px;border-radius:999px;border:2px solid rgba(255,95,162,.6);display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--pink);margin:0 auto 14px;background:var(--card);overflow:hidden;animation:pulseGlow 2.4s ease-in-out infinite}
+  .team-card .photo img{width:100%;height:100%;object-fit:cover}
+  .team-card h4{font-size:16px;margin-bottom:4px;color:rgba(245,240,247,.6);font-weight:600}
+  .team-card .role{color:var(--pink);font-size:13px;font-weight:700;letter-spacing:.03em;text-transform:uppercase}
   .lane{background:var(--card);border:1px solid rgba(122,60,255,.35);border-radius:16px;padding:24px}
   form.dj{background:var(--card);border:1px solid rgba(255,95,162,.35);border-radius:18px;padding:28px;display:grid;gap:16px}
   form.dj .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
@@ -461,6 +482,16 @@
       <p style="color:var(--pink);font-weight:600">However you choose to enjoy Baked Up, our Sugaa Squaad can't wait to make memories with you, your friends and your family that you'll want to relive.</p>
     </div>
 
+    <h3 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin:56px 0 10px">Meet The <span style="color:var(--pink)">Team</span></h3>
+    <p class="lede">The people running the Squaad.</p>
+    <div class="grid team">
+      <div class="team-card"><div class="photo">👤</div><h4>Name coming soon</h4><div class="role">CEO</div></div>
+      <div class="team-card"><div class="photo">👤</div><h4>Name coming soon</h4><div class="role">Community Organizer</div></div>
+      <div class="team-card"><div class="photo">👤</div><h4>Name coming soon</h4><div class="role">Project Manager</div></div>
+      <div class="team-card"><div class="photo">👤</div><h4>Name coming soon</h4><div class="role">Media &amp; Production Manager</div></div>
+      <div class="team-card"><div class="photo">👤</div><h4>Name coming soon</h4><div class="role">Squaad Member</div></div>
+    </div>
+
     <h3 style="font-size:clamp(22px,3vw,32px);font-weight:900;margin:56px 0 10px">Get <span style="color:var(--purple)">Involved</span></h3>
     <p class="lede">There's a spot on the Squaad for everybody. Pick your lane:</p>
     <div class="grid lanes">
@@ -511,6 +542,14 @@
   <p class="dim" style="font-size:13px;margin:24px 0 0">© 2026 Baked Up, LLC · Austin, TX · Turning friends into family.</p>
 </footer>
 
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close">&times;</button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photo">&lsaquo;</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next photo">&rsaquo;</button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+
 <script>
 /* =========================================================================
    BAKED UP — front end
@@ -559,6 +598,153 @@ const CONFIG = {
       photoWords: /abel\s*fest/i,
       instagram: 'https://www.instagram.com/abelfest.tx/', igHandle: '@abelfest.tx',
       photos: [],
+      album: [
+        {t:'images/abelfest-2026/thumbs/abelfest-001.jpg',f:'images/abelfest-2026/full/abelfest-001.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-002.jpg',f:'images/abelfest-2026/full/abelfest-002.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-003.jpg',f:'images/abelfest-2026/full/abelfest-003.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-004.jpg',f:'images/abelfest-2026/full/abelfest-004.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-005.jpg',f:'images/abelfest-2026/full/abelfest-005.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-006.jpg',f:'images/abelfest-2026/full/abelfest-006.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-007.jpg',f:'images/abelfest-2026/full/abelfest-007.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-008.jpg',f:'images/abelfest-2026/full/abelfest-008.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-009.jpg',f:'images/abelfest-2026/full/abelfest-009.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-010.jpg',f:'images/abelfest-2026/full/abelfest-010.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-011.jpg',f:'images/abelfest-2026/full/abelfest-011.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-012.jpg',f:'images/abelfest-2026/full/abelfest-012.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-013.jpg',f:'images/abelfest-2026/full/abelfest-013.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-014.jpg',f:'images/abelfest-2026/full/abelfest-014.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-015.jpg',f:'images/abelfest-2026/full/abelfest-015.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-016.jpg',f:'images/abelfest-2026/full/abelfest-016.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-017.jpg',f:'images/abelfest-2026/full/abelfest-017.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-018.jpg',f:'images/abelfest-2026/full/abelfest-018.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-019.jpg',f:'images/abelfest-2026/full/abelfest-019.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-020.jpg',f:'images/abelfest-2026/full/abelfest-020.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-021.jpg',f:'images/abelfest-2026/full/abelfest-021.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-022.jpg',f:'images/abelfest-2026/full/abelfest-022.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-023.jpg',f:'images/abelfest-2026/full/abelfest-023.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-024.jpg',f:'images/abelfest-2026/full/abelfest-024.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-025.jpg',f:'images/abelfest-2026/full/abelfest-025.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-026.jpg',f:'images/abelfest-2026/full/abelfest-026.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-027.jpg',f:'images/abelfest-2026/full/abelfest-027.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-028.jpg',f:'images/abelfest-2026/full/abelfest-028.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-029.jpg',f:'images/abelfest-2026/full/abelfest-029.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-030.jpg',f:'images/abelfest-2026/full/abelfest-030.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-031.jpg',f:'images/abelfest-2026/full/abelfest-031.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-032.jpg',f:'images/abelfest-2026/full/abelfest-032.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-033.jpg',f:'images/abelfest-2026/full/abelfest-033.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-034.jpg',f:'images/abelfest-2026/full/abelfest-034.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-035.jpg',f:'images/abelfest-2026/full/abelfest-035.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-036.jpg',f:'images/abelfest-2026/full/abelfest-036.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-037.jpg',f:'images/abelfest-2026/full/abelfest-037.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-038.jpg',f:'images/abelfest-2026/full/abelfest-038.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-039.jpg',f:'images/abelfest-2026/full/abelfest-039.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-040.jpg',f:'images/abelfest-2026/full/abelfest-040.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-041.jpg',f:'images/abelfest-2026/full/abelfest-041.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-042.jpg',f:'images/abelfest-2026/full/abelfest-042.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-043.jpg',f:'images/abelfest-2026/full/abelfest-043.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-044.jpg',f:'images/abelfest-2026/full/abelfest-044.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-045.jpg',f:'images/abelfest-2026/full/abelfest-045.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-046.jpg',f:'images/abelfest-2026/full/abelfest-046.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-047.jpg',f:'images/abelfest-2026/full/abelfest-047.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-048.jpg',f:'images/abelfest-2026/full/abelfest-048.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-049.jpg',f:'images/abelfest-2026/full/abelfest-049.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-050.jpg',f:'images/abelfest-2026/full/abelfest-050.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-051.jpg',f:'images/abelfest-2026/full/abelfest-051.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-052.jpg',f:'images/abelfest-2026/full/abelfest-052.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-053.jpg',f:'images/abelfest-2026/full/abelfest-053.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-054.jpg',f:'images/abelfest-2026/full/abelfest-054.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-055.jpg',f:'images/abelfest-2026/full/abelfest-055.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-056.jpg',f:'images/abelfest-2026/full/abelfest-056.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-057.jpg',f:'images/abelfest-2026/full/abelfest-057.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-058.jpg',f:'images/abelfest-2026/full/abelfest-058.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-059.jpg',f:'images/abelfest-2026/full/abelfest-059.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-060.jpg',f:'images/abelfest-2026/full/abelfest-060.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-061.jpg',f:'images/abelfest-2026/full/abelfest-061.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-062.jpg',f:'images/abelfest-2026/full/abelfest-062.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-063.jpg',f:'images/abelfest-2026/full/abelfest-063.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-064.jpg',f:'images/abelfest-2026/full/abelfest-064.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-065.jpg',f:'images/abelfest-2026/full/abelfest-065.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-066.jpg',f:'images/abelfest-2026/full/abelfest-066.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-067.jpg',f:'images/abelfest-2026/full/abelfest-067.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-068.jpg',f:'images/abelfest-2026/full/abelfest-068.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-069.jpg',f:'images/abelfest-2026/full/abelfest-069.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-070.jpg',f:'images/abelfest-2026/full/abelfest-070.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-071.jpg',f:'images/abelfest-2026/full/abelfest-071.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-072.jpg',f:'images/abelfest-2026/full/abelfest-072.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-073.jpg',f:'images/abelfest-2026/full/abelfest-073.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-074.jpg',f:'images/abelfest-2026/full/abelfest-074.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-075.jpg',f:'images/abelfest-2026/full/abelfest-075.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-076.jpg',f:'images/abelfest-2026/full/abelfest-076.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-077.jpg',f:'images/abelfest-2026/full/abelfest-077.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-078.jpg',f:'images/abelfest-2026/full/abelfest-078.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-079.jpg',f:'images/abelfest-2026/full/abelfest-079.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-080.jpg',f:'images/abelfest-2026/full/abelfest-080.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-081.jpg',f:'images/abelfest-2026/full/abelfest-081.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-082.jpg',f:'images/abelfest-2026/full/abelfest-082.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-083.jpg',f:'images/abelfest-2026/full/abelfest-083.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-084.jpg',f:'images/abelfest-2026/full/abelfest-084.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-085.jpg',f:'images/abelfest-2026/full/abelfest-085.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-086.jpg',f:'images/abelfest-2026/full/abelfest-086.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-087.jpg',f:'images/abelfest-2026/full/abelfest-087.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-088.jpg',f:'images/abelfest-2026/full/abelfest-088.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-089.jpg',f:'images/abelfest-2026/full/abelfest-089.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-090.jpg',f:'images/abelfest-2026/full/abelfest-090.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-091.jpg',f:'images/abelfest-2026/full/abelfest-091.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-092.jpg',f:'images/abelfest-2026/full/abelfest-092.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-093.jpg',f:'images/abelfest-2026/full/abelfest-093.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-094.jpg',f:'images/abelfest-2026/full/abelfest-094.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-095.jpg',f:'images/abelfest-2026/full/abelfest-095.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-096.jpg',f:'images/abelfest-2026/full/abelfest-096.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-097.jpg',f:'images/abelfest-2026/full/abelfest-097.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-098.jpg',f:'images/abelfest-2026/full/abelfest-098.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-099.jpg',f:'images/abelfest-2026/full/abelfest-099.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-100.jpg',f:'images/abelfest-2026/full/abelfest-100.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-101.jpg',f:'images/abelfest-2026/full/abelfest-101.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-102.jpg',f:'images/abelfest-2026/full/abelfest-102.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-103.jpg',f:'images/abelfest-2026/full/abelfest-103.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-104.jpg',f:'images/abelfest-2026/full/abelfest-104.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-105.jpg',f:'images/abelfest-2026/full/abelfest-105.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-106.jpg',f:'images/abelfest-2026/full/abelfest-106.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-107.jpg',f:'images/abelfest-2026/full/abelfest-107.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-108.jpg',f:'images/abelfest-2026/full/abelfest-108.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-109.jpg',f:'images/abelfest-2026/full/abelfest-109.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-110.jpg',f:'images/abelfest-2026/full/abelfest-110.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-111.jpg',f:'images/abelfest-2026/full/abelfest-111.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-112.jpg',f:'images/abelfest-2026/full/abelfest-112.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-113.jpg',f:'images/abelfest-2026/full/abelfest-113.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-114.jpg',f:'images/abelfest-2026/full/abelfest-114.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-115.jpg',f:'images/abelfest-2026/full/abelfest-115.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-116.jpg',f:'images/abelfest-2026/full/abelfest-116.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-117.jpg',f:'images/abelfest-2026/full/abelfest-117.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-118.jpg',f:'images/abelfest-2026/full/abelfest-118.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-119.jpg',f:'images/abelfest-2026/full/abelfest-119.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-120.jpg',f:'images/abelfest-2026/full/abelfest-120.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-121.jpg',f:'images/abelfest-2026/full/abelfest-121.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-122.jpg',f:'images/abelfest-2026/full/abelfest-122.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-123.jpg',f:'images/abelfest-2026/full/abelfest-123.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-124.jpg',f:'images/abelfest-2026/full/abelfest-124.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-125.jpg',f:'images/abelfest-2026/full/abelfest-125.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-126.jpg',f:'images/abelfest-2026/full/abelfest-126.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-127.jpg',f:'images/abelfest-2026/full/abelfest-127.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-128.jpg',f:'images/abelfest-2026/full/abelfest-128.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-129.jpg',f:'images/abelfest-2026/full/abelfest-129.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-130.jpg',f:'images/abelfest-2026/full/abelfest-130.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-131.jpg',f:'images/abelfest-2026/full/abelfest-131.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-132.jpg',f:'images/abelfest-2026/full/abelfest-132.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-133.jpg',f:'images/abelfest-2026/full/abelfest-133.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-134.jpg',f:'images/abelfest-2026/full/abelfest-134.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-135.jpg',f:'images/abelfest-2026/full/abelfest-135.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-136.jpg',f:'images/abelfest-2026/full/abelfest-136.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-137.jpg',f:'images/abelfest-2026/full/abelfest-137.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-138.jpg',f:'images/abelfest-2026/full/abelfest-138.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-139.jpg',f:'images/abelfest-2026/full/abelfest-139.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-140.jpg',f:'images/abelfest-2026/full/abelfest-140.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-141.jpg',f:'images/abelfest-2026/full/abelfest-141.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-142.jpg',f:'images/abelfest-2026/full/abelfest-142.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-143.jpg',f:'images/abelfest-2026/full/abelfest-143.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-144.jpg',f:'images/abelfest-2026/full/abelfest-144.jpg'},
+        {t:'images/abelfest-2026/thumbs/abelfest-145.jpg',f:'images/abelfest-2026/full/abelfest-145.jpg'}
+      ],
       playlistUrl: '', playlistTitle: 'The ABELFEST playlist',
       playlistBlurb: 'Warm-up for the big one.',
       featured: { name: '', blurb: '', image: '', mixUrl: '', link: '' }
@@ -968,6 +1154,11 @@ function buildSeriesPages() {
           '<div class="carousel" id="' + sr.id + '-carousel"></div>' +
           '<div class="car-nav"><button id="' + sr.id + '-prev" aria-label="Scroll left">‹</button><button id="' + sr.id + '-next" aria-label="Scroll right">›</button></div>' +
         '</div>' +
+        '<div style="margin-top:64px;display:none" id="' + sr.id + '-album-wrap">' +
+          '<h2 class="sec">The <span style="color:var(--pink)">Album</span></h2>' +
+          '<p class="lede" id="' + sr.id + '-album-lede"></p>' +
+          '<div class="album-grid" id="' + sr.id + '-album"></div>' +
+        '</div>' +
       '</div>';
     host.appendChild(sec);
   });
@@ -1049,6 +1240,24 @@ function renderSeries(sr) {
       if (i >= pics.length) d.setAttribute('aria-hidden', 'true');
       car.appendChild(d);
     });
+  }
+
+  // Full photo album (all event photos + lightbox) — only shown when sr.album is populated
+  const albumWrap = $('#' + id + '-album-wrap');
+  const albumGrid = $('#' + id + '-album');
+  if (sr.album && sr.album.length) {
+    albumWrap.style.display = '';
+    $('#' + id + '-album-lede').textContent = sr.album.length + ' photos from ' + sr.name + '.';
+    albumGrid.innerHTML = '';
+    sr.album.forEach((p, i) => {
+      const b = el('button', 'album-thumb');
+      b.type = 'button';
+      b.innerHTML = '<img src="' + esc(p.t) + '" alt="' + esc(sr.name) + ' photo ' + (i + 1) + '" loading="lazy">';
+      b.onclick = () => openLightbox(sr.album, i, sr.name);
+      albumGrid.appendChild(b);
+    });
+  } else {
+    albumWrap.style.display = 'none';
   }
 }
 
@@ -1137,6 +1346,41 @@ function makeCarousel(carSel, prevSel, nextSel) {
 }
 makeCarousel('#carousel', '#car-prev', '#car-next');
 CONFIG.series.forEach(sr => makeCarousel('#' + sr.id + '-carousel', '#' + sr.id + '-prev', '#' + sr.id + '-next'));
+
+/* ---------- lightbox (photo album) ---------- */
+let lbPhotos = [], lbIndex = 0, lbName = '';
+function openLightbox(photos, index, name) {
+  lbPhotos = photos; lbIndex = index; lbName = name;
+  renderLightbox();
+  $('#lightbox').classList.add('open');
+  $('#lightbox').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  $('#lightbox').classList.remove('open');
+  $('#lightbox').setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+function renderLightbox() {
+  const p = lbPhotos[lbIndex];
+  $('#lb-img').src = p.f;
+  $('#lb-img').alt = lbName + ' photo ' + (lbIndex + 1);
+  $('#lb-count').textContent = (lbIndex + 1) + ' / ' + lbPhotos.length;
+}
+function lbStep(dir) {
+  lbIndex = (lbIndex + dir + lbPhotos.length) % lbPhotos.length;
+  renderLightbox();
+}
+$('#lb-close').onclick = closeLightbox;
+$('#lb-prev').onclick = () => lbStep(-1);
+$('#lb-next').onclick = () => lbStep(1);
+$('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
+window.addEventListener('keydown', (e) => {
+  if (!$('#lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lbStep(-1);
+  if (e.key === 'ArrowRight') lbStep(1);
+});
 
 /* ---------- routing ---------- */
 function show(page) {
