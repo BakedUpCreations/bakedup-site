@@ -1262,7 +1262,11 @@ function buildSeriesPages() {
     sec.id = 'page-' + sr.id;
     sec.innerHTML =
       '<div class="wrap">' +
-        '<div class="ig-strip">' +
+        '<h2 class="sec">' + sr.titleHtml + '</h2>' +
+        '<p class="lede">' + esc(sr.lede) + '</p>' +
+        '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px" id="' + sr.id + '-grid"></div>' +
+        '<div class="listen"><article class="card listen-card" id="' + sr.id + '-playlist"></article><article class="card listen-card" id="' + sr.id + '-featured"></article></div>' +
+        '<div class="ig-strip" style="margin-top:64px">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:6px">' +
             '<h2 class="sec" style="margin:0">On the <span style="color:var(--pink)">\'Gram</span></h2>' +
             '<a class="btn-ghost" id="' + sr.id + '-ig" href="' + esc(sr.instagram) + '" target="_blank" rel="noopener">Follow ' + esc(sr.igHandle) + ' →</a></div>' +
@@ -1270,10 +1274,6 @@ function buildSeriesPages() {
           '<div class="carousel" id="' + sr.id + '-carousel"></div>' +
           '<div class="car-nav"><button id="' + sr.id + '-prev" aria-label="Scroll left">‹</button><button id="' + sr.id + '-next" aria-label="Scroll right">›</button></div>' +
         '</div>' +
-        '<h2 class="sec" style="margin-top:64px">' + sr.titleHtml + '</h2>' +
-        '<p class="lede">' + esc(sr.lede) + '</p>' +
-        '<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px" id="' + sr.id + '-grid"></div>' +
-        '<div class="listen"><article class="card listen-card" id="' + sr.id + '-playlist"></article><article class="card listen-card" id="' + sr.id + '-featured"></article></div>' +
         '<div style="margin-top:64px"><h2 class="sec">' + sr.pastTitleHtml + '</h2><p class="lede">' + esc(sr.pastLede) + '</p>' +
           '<div class="chips" id="' + sr.id + '-chips"></div><div class="grid archive" id="' + sr.id + '-archive"></div></div>' +
         '<div style="margin-top:64px;display:none" id="' + sr.id + '-album-wrap">' +
