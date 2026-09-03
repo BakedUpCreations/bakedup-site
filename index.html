@@ -59,7 +59,10 @@
   /* sticky menu */
   nav.site{position:sticky;top:0;z-index:50}
   .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,95,162,.25)}
-  .nav-inner img{height:72px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
+  .nav-top{display:flex;align-items:center;gap:clamp(12px,3vw,36px);width:100%;max-width:var(--max);margin:0 auto}
+  .nav-brand{flex:0 0 auto;line-height:0}
+  .nav-brand img{height:96px;width:auto;filter:drop-shadow(0 0 24px rgba(255,95,162,.45))}
+  .nav-top .menu-rows{flex:1 1 auto;margin-top:0}
   .slogan{font-family:'Unbounded',sans-serif;font-size:clamp(12px,1.6vw,16px);font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);margin:0}
   .menu{display:flex;justify-content:center;align-items:center;gap:clamp(6px,2vw,22px);row-gap:clamp(4px,1.3vw,14px);flex-wrap:wrap;margin-top:6px;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   .menu a{color:var(--ink);padding:8px 14px;border-radius:999px;transition:background .15s,color .15s}
@@ -71,6 +74,11 @@
   .menu a.menu-logo{padding:4px 10px}
   .menu a.menu-logo img{height:30px;width:auto;display:block}
   .menu a.menu-logo:hover,.menu a.menu-logo.active{background:rgba(255,95,162,.18)}
+  @media(max-width:900px){
+    .nav-top{flex-direction:column;gap:10px}
+    .nav-brand img{height:72px}
+  }
+  @media(max-width:520px){ .nav-brand img{height:58px} }
 
   .wrap{max-width:var(--max);margin:0 auto;padding:56px 32px}
   .page{display:none}
@@ -293,8 +301,8 @@
 
 <nav class="site">
   <div class="nav-inner">
-    <a href="#home"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/baked-up-trademarked-full-color-white-r.png?w=525" alt="Baked Up"></a>
-    <p class="slogan">Turning friends into family.</p>
+    <div class="nav-top">
+    <a class="nav-brand" href="#home"><img src="https://bakedupcreations.com/wp-content/uploads/2025/06/baked-up-trademarked-full-color-white-r.png?w=525" alt="Baked Up"></a>
     <div class="menu-rows" id="menu">
       <div class="menu">
         <a href="#home" data-page="home">Home</a>
@@ -309,6 +317,8 @@
         <a href="#abelfest" data-page="abelfest" class="menu-logo"><img src="images/abelfest-logo.png" alt="ABELFEST"></a>
       </div>
     </div>
+    </div>
+    <p class="slogan">Turning friends into family.</p>
   </div>
 </nav>
 
