@@ -36,6 +36,26 @@
   .treats span{position:absolute;display:block;width:6px;height:18px;border-radius:3px}
   @media(max-width:1240px){.treats{display:none}}
 
+  /* cupcake corners */
+  @keyframes cupcakeBobL{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes cupcakeBobR{0%,100%{transform:scaleX(-1) translateY(0)}50%{transform:scaleX(-1) translateY(-8px)}}
+  .cupcake-corner{position:fixed;bottom:-10px;width:100px;z-index:5;pointer-events:none;filter:drop-shadow(0 12px 14px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(255,95,162,.5))}
+  .cupcake-corner.left{left:-10px;animation:cupcakeBobL 5s ease-in-out infinite}
+  .cupcake-corner.right{right:-10px;animation:cupcakeBobR 5s ease-in-out infinite;animation-delay:-2.5s}
+  .cupcake-corner svg{display:block;width:100%;height:auto}
+  .cc-liner{fill:var(--purple-deep)}
+  .cc-liner-stripes rect{fill:var(--purple)}
+  .cc-liner-outline{fill:none;stroke:rgba(255,215,232,.35);stroke-width:2}
+  .cc-icing{fill:var(--pink)}
+  .cc-icing-hi{fill:var(--pink-soft);opacity:.75}
+  .cc-cherry{fill:var(--purple-deep)}
+  .cc-cherry-hi{fill:var(--pink-soft);opacity:.85}
+  .cc-sprinkle-a{fill:var(--pink-soft)}
+  .cc-sprinkle-b{fill:var(--purple-deep)}
+  .cc-sprinkle-c{fill:var(--pink-soft)}
+  @media(max-width:820px){.cupcake-corner{width:66px}}
+  @media(max-width:520px){.cupcake-corner{display:none}}
+
   /* sticky menu */
   nav.site{position:sticky;top:0;z-index:50}
   .nav-inner{display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px 20px;background:rgba(14,10,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,95,162,.25)}
@@ -220,6 +240,35 @@
   <span style="right:14px;background:var(--pink-soft);transform:rotate(-6deg);animation:treatFall 15s linear infinite;animation-delay:-11s"></span>
   <span style="right:32px;width:5px;height:14px;background:var(--purple-deep);transform:rotate(26deg);animation:treatFall 19s linear infinite;animation-delay:-4s"></span>
 </div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="cupcake-icon" viewBox="0 0 120 140">
+    <defs>
+      <clipPath id="cc-clip"><path d="M18 138 L12 68 Q60 56 108 68 L102 138 Z"/></clipPath>
+    </defs>
+    <g clip-path="url(#cc-clip)">
+      <rect class="cc-liner" x="0" y="0" width="120" height="140"/>
+      <g class="cc-liner-stripes">
+        <rect x="8" y="0" width="11" height="140"/>
+        <rect x="30" y="0" width="11" height="140"/>
+        <rect x="52" y="0" width="11" height="140"/>
+        <rect x="74" y="0" width="11" height="140"/>
+        <rect x="96" y="0" width="11" height="140"/>
+      </g>
+    </g>
+    <path class="cc-liner-outline" d="M18 138 L12 68 Q60 56 108 68 L102 138 Z"/>
+    <path class="cc-icing" d="M14 70 C4 50 16 26 32 34 C32 12 58 2 62 24 C68 2 96 8 92 30 C110 24 118 50 100 62 C112 72 100 82 84 76 Q60 88 34 76 C16 84 2 76 14 70 Z"/>
+    <ellipse class="cc-icing-hi" cx="40" cy="30" rx="12" ry="7"/>
+    <circle class="cc-cherry" cx="62" cy="14" r="8"/>
+    <circle class="cc-cherry-hi" cx="58" cy="10" r="2.4"/>
+    <rect class="cc-sprinkle-a" x="26" y="44" width="6" height="14" rx="3" transform="rotate(20 29 51)"/>
+    <rect class="cc-sprinkle-b" x="72" y="40" width="6" height="14" rx="3" transform="rotate(-18 75 47)"/>
+    <rect class="cc-sprinkle-c" x="50" y="50" width="6" height="14" rx="3" transform="rotate(6 53 57)"/>
+  </symbol>
+</defs></svg>
+
+<div class="cupcake-corner left" aria-hidden="true"><svg viewBox="0 0 120 140"><use href="#cupcake-icon"/></svg></div>
+<div class="cupcake-corner right" aria-hidden="true"><svg viewBox="0 0 120 140"><use href="#cupcake-icon"/></svg></div>
 
 <nav class="site">
   <div class="nav-inner">
